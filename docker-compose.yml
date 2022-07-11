@@ -34,11 +34,11 @@ services:
         condition: service_healthy
     environment:
       - PORT=3001
-      - DB_USER=root
-      - DB_PASS=123456
-      - DB_HOST=mysql # mysql ou postgres
-      - DB_NAME=delivery-app
-      - DB_PORT=3306
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=password
+      - HOSTNAME=mysql # mysql ou postgres
+      - MYSQL_PORT=3306
+      - MYSQL_DB_NAME=delivery-app
     healthcheck:
       test: ["CMD", "lsof", "-t", "-i:3001"] # Caso utilize outra porta interna para o back, altere ela aqui também
       timeout: 10s
@@ -49,9 +49,9 @@ services:
     ports:
       - 3002:3306
     environment:
-      - MYSQL_USER=trem
-      - MYSQL_PASSWORD=123546
-      - MYSQL_ROOT_PASSWORD=123546
+      # - MYSQL_USER=trem
+      # - MYSQL_PASSWORD=password
+      - MYSQL_ROOT_PASSWORD=password
       # - MYSQL_RANDOM_ROOT_PASSWORD=true
       - MYSQL_DATABASE=delivery-app
     restart: "always"
