@@ -1,6 +1,6 @@
 const { Router } = require('express');
 
-const CostumerController = require('../../../modules/costumer/controller');
+const CostumerController = require('../../../modules/customer/controller');
 
 const {
   validateSignInCostumer,

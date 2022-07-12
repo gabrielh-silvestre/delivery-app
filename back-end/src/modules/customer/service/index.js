@@ -1,6 +1,6 @@
 const { NotFoundError, ConflictError } = require('restify-errors');
 
-const CostumerModel = require('../model');
+const CustomerModel = require('../model');
 
 const { validate, encrypt } = require('../../../shared/utils/encrypt');
 const { generateToken } = require('../../../shared/utils/auth');
@@ -8,17 +8,17 @@ const { generateToken } = require('../../../shared/utils/auth');
 const INVALID_EMAIL_OR_PASSWORD = 'Invalid email or password';
 
 const signIn = async ({ email, password }) => {
-  const foundCostumer = await CostumerModel.findByEmail(email);
+  const foundCustomer = await CustomerModel.findByEmail(email);
 
-  if (!foundCostumer) {
+  if (!foundCustomer) {
     throw new NotFoundError(INVALID_EMAIL_OR_PASSWORD);
   }
 
-  if (!validate(password, foundCostumer.password)) {
+  if (!validate(password, foundCustomer.password)) {
     throw new NotFoundError(INVALID_EMAIL_OR_PASSWORD);
   }
 
-  const { id, name, role } = foundCostumer;
+  const { id, name, role } = foundCustomer;
   const token = generateToken({ id, role });
 
   return {
@@ -28,19 +28,19 @@ const signIn = async ({ email, password }) => {
 };
 
 const signUp = async ({ name, email, password }) => {
-  const foundCostumer = await CostumerModel.findByEmail(email);
+  const foundCustomer = await CustomerModel.findByEmail(email);
 
-  if (foundCostumer) {
+  if (foundCustomer) {
     throw new ConflictError('Email already exists');
   }
 
-  const newCostumer = await CostumerModel.create({
+  const newCustomer = await CustomerModel.create({
     name,
     email,
     password: encrypt(password),
   });
 
-  const { id, role } = newCostumer;
+  const { id, role } = newCustomer;
   const token = generateToken({ id, role });
 
   return {
