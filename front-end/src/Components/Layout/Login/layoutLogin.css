@@ -1,27 +1,23 @@
 .container {
-  width: 100%;
   margin: 0 auto;
+  width: 100%;
 }
 
 .container-login {
-  width: 100%;
-  min-height: 100vh;
-
+  align-items: center;
+  background-color: #bc6129;
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
   justify-content: center;
-
+  min-height: 100vh;
   padding: 15px;
-
-  background-color: #bc6129;
+  width: 100%;
 }
 
 .wrap-login {
-  width: 390px;
   background-color: #de9156;
   border-radius: 10px;
-
-  overflow: hidden;
   padding: 77px 55px 33px 55px;
+  overflow: hidden;
+  width: 390px;
 }

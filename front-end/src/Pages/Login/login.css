@@ -4,12 +4,8 @@
 
 .login-form-title {
   display: block;
-  /* font-size: 30px;
-  color: azure; */
-
-  /* line-height: 1.2; */
-  text-align: center;
   margin-bottom: 1.5rem;
+  text-align: center;
 }
 
 .login-form-title img {
@@ -17,69 +13,59 @@
 }
 
 .wrap-input {
-  width: 100%;
-  position: relative;
   border-bottom: 2px solid #bc6129;
   margin-bottom: 37px;
+  position: relative;
+  width: 100%;
 }
 
 .input {
-  font-size: 15px;
-  color: rgb(25, 23, 21);
-  line-height: 1.2;
-  border: none;
-  display: block;
-
-  width: 100%;
-  height: 45px;
-
   background-color: transparent;
-
+  border: none;
+  color: rgb(25, 23, 21);
+  display: block;
+  font-size: 15px;
+  height: 45px;
+  line-height: 1.2;
   padding: 0 5px;
+  width: 100%;
 }
 
 .focus-input {
-  position: absolute;
-  display: block;
-  width: 100%;
-  height: 100%;
-
-  top: 0;
-  left: 0;
-
-  pointer-events: none;
   color: #adadad;
+  display: block;
+  height: 100%;
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  width: 100%;
 }
 
 .focus-input::before {
+  background: linear-gradient(to left, #21d4fd, #b721ff);
+  bottom: -2px;
   content: '';
   display: block;
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
   height: 2px;
-
-  background: linear-gradient(to left, #21d4fd, #b721ff);
+  left: 0;
+  position: absolute;
   transition: all ease 0.4s;
+  width: 0;
 }
 
 .focus-input::after {
-  font-size: 15px;
   color: #fcfcfc;
-  line-height: 1.2;
-
   content: attr(data-placeholder);
-
   display: block;
-  width: 100%;
-  position: absolute;
-  top: 16px;
+  font-size: 15px;
   left: 0px;
-
+  line-height: 1.2;
+  position: absolute;
   padding-left: 5px;
-
+  top: 16px;
   transition: all ease 0.4s;
+  width: 100%;
 }
 
 input:focus {
@@ -110,23 +96,18 @@ input:focus {
 }
 
 .login-form-btn {
-  font-size: 15px;
+  align-items: center;
+  background: linear-gradient(to left, #21d4fd, #b721ff);
   border: none;
   border-radius: 10px;
-  color: #fff;
-
-  line-height: 1.2;
-
-  text-transform: uppercase;
-
   display: flex;
-  justify-content: center;
-  align-items: center;
-
-  width: 100%;
+  color: white;
+  font-size: 15px;
   height: 50px;
-
-  background: linear-gradient(to left, #21d4fd, #b721ff);
+  justify-content: center;
+  line-height: 1.2;
+  text-transform: uppercase;
+  width: 100%;
 }
 
 .login-form-btn:hover:not(:disabled) {
@@ -142,27 +123,27 @@ input:focus {
 }
 
 .create-account-text-center {
+  align-items: center;
   display: flex;
   justify-content: center;
-  align-items: center;
   margin-top: 20px;
 }
 
 .create-account-text {
-  font-size: 14px;
   color: #060606;
+  font-size: 14px;
   line-height: 1.5;
   padding-right: 8px;
 }
 
 .create-account-link {
-  font-size: 14px;
   color: #343333;
+  font-size: 14px;
   line-height: 1.5;
   text-decoration: none;
 }
 
 .alert {
-  text-align: center;
   margin-top: 10px;
+  text-align: center;
 }

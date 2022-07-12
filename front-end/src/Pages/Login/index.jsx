@@ -41,7 +41,7 @@ export default function Login() {
     setEmail(email);
     setToken(response.token);
     setRole(response.role);
-    history.push("/customer/products");
+    history.push('/customer/products');
   };
 
   return (
