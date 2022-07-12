@@ -59,7 +59,7 @@
   content: attr(data-placeholder);
   display: block;
   font-size: 15px;
-  left: 0px;
+  left: 0;
   line-height: 1.2;
   padding-left: 5px;
   position: absolute;
