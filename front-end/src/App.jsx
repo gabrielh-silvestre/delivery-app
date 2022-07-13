@@ -2,13 +2,17 @@ import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import Provider from './Context/Provider';
 import Login from './Pages/Login';
+import Register from './Pages/Register';
 
 function App() {
   return (
     <Switch>
       <Provider>
         <Route exact path="/login" component={ Login } />
-        <Redirect exact from="/" to="/login" />
+        <Route exact path="/register" component={ Register } />
+        <Route exact path="/">
+          <Redirect exact from="/" to="/login" />
+        </Route>
       </Provider>
     </Switch>
   );
