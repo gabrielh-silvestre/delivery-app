@@ -1,5 +1,9 @@
-const { sellerSaleReturnNormalizer } = require('./sale.normalizer');
+const {
+  sellerSaleReturnNormalizer,
+  detailedSaleFormatter,
+} = require('./sale.normalizer');
 
 module.exports = {
   sellerSaleReturnNormalizer,
+  detailedSaleFormatter,
 };

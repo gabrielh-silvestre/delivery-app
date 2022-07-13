@@ -4,8 +4,23 @@ const sellerSaleFormat = (sale) => ({
   address: sale.address,
   saleDate: sale.saleDate,
   status: sale.status,
-  // productQuantities: sale.quantities,
 });
+
+const detailedSaleFormatter = ({ dataValues }) => {
+  const products = dataValues.products.map(
+    ({ id, name, price, saleProduct }) => ({
+      id,
+      name,
+      price,
+      quantity: saleProduct.quantity,
+    }),
+  );
+
+  return {
+    ...dataValues,
+    products,
+  };
+};
 
 const sellerSaleReturnNormalizer = (sales) =>
   sales.map(({ dataValues }) => {
@@ -14,14 +29,10 @@ const sellerSaleReturnNormalizer = (sales) =>
       number: dataValues.deliveryNumber,
     };
 
-    // const quantities = dataValues.products.map(({ id, saleProducts }) => ({
-    //   id,
-    //   quantity: saleProducts.quantity,
-    // }));
-
     return sellerSaleFormat({ ...dataValues, address });
   });
 
 module.exports = {
   sellerSaleReturnNormalizer,
+  detailedSaleFormatter,
 };
