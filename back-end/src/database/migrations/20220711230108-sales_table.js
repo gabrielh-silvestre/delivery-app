@@ -46,8 +46,8 @@ module.exports = {
         allowNull: false,
       },
       status: {
-        type: Sequelize.ENUM,
-        values: ["PEDENTE", "PREPARANDO", "EM TRANSITO", "ENTREGUE"],
+        type: Sequelize.STRING,
+        allowNull: false,
       }
     });
   },

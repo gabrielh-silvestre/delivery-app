@@ -10,10 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       name: DataTypes.STRING,
       email: DataTypes.STRING,
       password: DataTypes.STRING,
-      role: {
-        type: DataTypes.ENUM,
-        values: ["administrator", "seller", "customer"],
-      },
+      role: DataTypes.STRING,
     },
     {
       timestamps: false,

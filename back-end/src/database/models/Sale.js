@@ -34,10 +34,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DATE,
         defaultValue: new Date(),
       },
-      status: {
-        type: DataTypes.ENUM,
-        values: ["PEDENTE", "PREPARANDO", "EM TRANSITO", "ENTREGUE"],
-      },
+      status: DataTypes.STRING,
     },
     {
       timestamps: false,
