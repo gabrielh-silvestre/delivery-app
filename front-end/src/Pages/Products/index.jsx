@@ -1,9 +1,23 @@
 import React from 'react';
+import NavBar from '../../Components/Navbar';
 
 function Products() {
+  const linksProducts = [
+    {
+      name: 'Produtos',
+      link: '/customer/products',
+      testid: 'customer_products__element-navbar-link-products',
+    },
+    {
+      name: 'Meus pedidos',
+      link: '/',
+      testid: 'customer_products__element-navbar-link-orders',
+    },
+  ];
+
   return (
     <div>
-      <h1>Página de Produtos</h1>
+      <NavBar links={ linksProducts } />
     </div>
   );
 }
