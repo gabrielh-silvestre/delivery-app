@@ -1,4 +1,4 @@
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import React, { useContext, useEffect, useState } from 'react';
 import LayoutLogin from '../../Components/Layout/Login';
 import DeliveryAppLogo from '../../images/DeliveryApp_Logo.png';
@@ -12,6 +12,10 @@ export default function Login() {
   const [alert, setAlert] = useState(false);
   const { setName, email, setEmail, setToken, setRole } = useContext(context);
   const history = useHistory();
+
+  const handleChangeRegister = () => {
+    history.push('/register');
+  };
 
   useEffect(() => {
     const regexEmail = /\S+@\S+\.\S+/;
@@ -89,13 +93,14 @@ export default function Login() {
 
         <div className="create-account-text-center">
           <span className="create-account-text">Não possui conta?</span>
-          <Link
-            to="/register"
+          <button
+            onClick={ handleChangeRegister }
+            type="button"
             className="create-account-link"
             data-testid="common_login__button-register"
           >
             Criar conta.
-          </Link>
+          </button>
         </div>
         {alert && (
           <p
