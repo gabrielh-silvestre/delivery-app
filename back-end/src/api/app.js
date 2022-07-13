@@ -13,6 +13,8 @@ app.use(cors());
 
 app.use('/costumers', costumerRouter);
 app.use('/sellers', sellerRouter);
+app.use('/products', productsRouter);
+
 
 app.use(errorHandler);
 
