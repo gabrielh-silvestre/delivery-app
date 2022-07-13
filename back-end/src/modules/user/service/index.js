@@ -44,7 +44,7 @@ const register = async ({ name, email, password }) => {
   const token = generateToken({ id, role });
 
   return {
-    statusCode: 200,
+    statusCode: 201,
     payload: { name, role, email, token },
   };
 };
