@@ -7,7 +7,7 @@ const CreateAccount = async (
   password,
 ) => {
   const response = await axios
-    .post(`${API_URL}register`, {
+    .post(`${API_URL}user/register`, {
       name,
       email,
       password,
