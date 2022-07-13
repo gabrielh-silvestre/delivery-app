@@ -10,7 +10,7 @@ function Products() {
     },
     {
       name: 'Meus pedidos',
-      link: '/',
+      link: '/customer/orders',
       testid: 'customer_products__element-navbar-link-orders',
     },
   ];

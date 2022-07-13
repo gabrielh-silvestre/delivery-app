@@ -50,13 +50,19 @@ function NavBar({ links }) {
             </li>
           ))}
           <li>
-            <span className="navbar-li">{name || 'sem nome'}</span>
+            <span
+              className="navbar-li"
+              data-testid="customer_products__element-navbar-user-full-name"
+            >
+              {name || 'sem nome'}
+            </span>
           </li>
           <li>
             <button
               className="navbar-li navbar-button"
               type="button"
               onClick={ () => exit() }
+              data-testid="customer_products__element-navbar-link-logout"
             >
               Sair
             </button>
