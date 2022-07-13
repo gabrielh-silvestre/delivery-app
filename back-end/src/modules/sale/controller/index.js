@@ -8,6 +8,16 @@ const findAll = async (req, res) => {
   return res.status(statusCode).json(payload);
 };
 
+const findById = async (req, res) => {
+  const { id, role } = req.user;
+  const { id: saleId } = req.params;
+
+  const { statusCode, payload } = await SaleService.findById(role, id, saleId);
+
+  return res.status(statusCode).json(payload);
+};
+
 module.exports = {
   findAll,
+  findById,
 };
