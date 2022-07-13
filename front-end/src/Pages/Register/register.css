@@ -1,0 +1,150 @@
+.register-form {
+  width: 100%;
+}
+
+.register-form-title {
+  display: block;
+  margin-bottom: 0.5rem;
+  margin-top: -2.5rem;
+  text-align: center;
+}
+
+.register-form-title img {
+  width: 190px;
+}
+
+.wrap-input {
+  border-bottom: 2px solid #bc6129;
+  margin-bottom: 37px;
+  position: relative;
+  width: 100%;
+}
+
+.input {
+  background-color: transparent;
+  border: none;
+  color: rgb(25, 23, 21);
+  display: block;
+  font-size: 15px;
+  height: 45px;
+  line-height: 1.2;
+  padding: 0 5px;
+  width: 100%;
+}
+
+.focus-input {
+  color: #adadad;
+  display: block;
+  height: 100%;
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.focus-input:before {
+  background: linear-gradient(to left, #21d4fd, #b721ff);
+  bottom: -2px;
+  content: '';
+  display: block;
+  height: 2px;
+  left: 0;
+  position: absolute;
+  transition: all ease 0.4s;
+  width: 0;
+}
+
+.focus-input:after {
+  color: #fcfcfc;
+  content: attr(data-placeholder);
+  display: block;
+  font-size: 15px;
+  left: 0;
+  line-height: 1.2;
+  padding-left: 5px;
+  position: absolute;
+  top: 16px;
+  transition: all ease 0.4s;
+  width: 100%;
+}
+
+input:focus {
+  outline: 0;
+}
+
+.input:focus + .focus-input::after {
+  top: -15px;
+}
+
+.input:focus + .focus-input::before {
+  width: 100%;
+}
+
+.has-value + .focus-input::after {
+  top: -15px;
+}
+
+.has-value + .focus-input::before {
+  width: 100%;
+}
+
+.container-register-form-btn {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-bottom: 13px;
+}
+
+.register-form-btn {
+  align-items: center;
+  background: linear-gradient(to left, #21d4fd, #b721ff);
+  border: none;
+  border-radius: 10px;
+  color: white;
+  display: flex;
+  font-size: 15px;
+  height: 50px;
+  justify-content: center;
+  line-height: 1.2;
+  text-transform: uppercase;
+  width: 100%;
+}
+
+.register-form-btn:hover:not(:disabled) {
+  cursor: pointer;
+}
+
+.btn-off {
+  opacity: 0.3;
+}
+
+.btn-off:hover {
+  cursor: not-allowed;
+}
+
+.create-account-text-center {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.create-account-text {
+  color: #060606;
+  font-size: 14px;
+  line-height: 1.5;
+  padding-right: 8px;
+}
+
+.login-account-link {
+  color: #343333;
+  font-size: 14px;
+  line-height: 1.5;
+  text-decoration: none;
+}
+
+.alert {
+  margin-top: 10px;
+  text-align: center;
+}
