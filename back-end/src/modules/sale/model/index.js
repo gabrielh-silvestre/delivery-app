@@ -1,26 +1,30 @@
-const { Sale, Product } = require('../../../database/models');
+const { Sale } = require('../../../database/models');
 
 const {
-  customerSaleReturnNormalizer,
+  sellerSaleReturnNormalizer,
 } = require('../../../shared/utils/normalizer');
 
 const findAllByCostumer = async (costumerId) => {
   const sales = await Sale.findAll({
     where: { userId: costumerId },
-    include: [
-      {
-        model: Product,
-        as: 'products',
-        through: { attributes: ['quantity'], as: 'saleProducts' },
-        attributes: ['id'],
-      },
-    ],
+    attributes: {
+      exclude: ['userId', 'sellerId', 'deliveryAddress', 'deliveryNumber'],
+    },
+  });
+
+  return sales;
+};
+
+const findAllBySeller = async (sellerId) => {
+  const sales = await Sale.findAll({
+    where: { sellerId },
     attributes: { exclude: ['userId', 'sellerId'] },
   });
 
-  return customerSaleReturnNormalizer(sales);
+  return sellerSaleReturnNormalizer(sales);
 };
 
 module.exports = {
   findAllByCostumer,
+  findAllBySeller,
 };
