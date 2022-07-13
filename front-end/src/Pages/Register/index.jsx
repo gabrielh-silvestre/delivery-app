@@ -58,7 +58,7 @@ export default function Register() {
             minLength={ 3 }
             value={ name }
             onChange={ ({ target }) => setName(target.value) }
-            data-testid="6"
+            data-testid="common_register__input-name"
           />
           <span className="focus-input" data-placeholder="Nome" />
         </div>
@@ -69,7 +69,7 @@ export default function Register() {
             type="email"
             value={ email }
             onChange={ ({ target }) => setEmail(target.value) }
-            data-testid="7"
+            data-testid="common_register__input-email"
           />
           <span className="focus-input" data-placeholder="E-mail" />
         </div>
@@ -81,7 +81,7 @@ export default function Register() {
             minLength={ 6 }
             value={ password }
             onChange={ ({ target }) => setPassword(target.value) }
-            data-testid="8"
+            data-testid="common_register__input-password"
           />
           <span className="focus-input" data-placeholder="Senha" />
         </div>
@@ -92,7 +92,7 @@ export default function Register() {
             onClick={ (event) => validData(event) }
             disabled={ !activeButton }
             type="submit"
-            data-testid="9"
+            data-testid="common_register__button-register"
           >
             Registrar
           </button>
@@ -104,7 +104,7 @@ export default function Register() {
             Fazer login.
           </Link>
         </div>
-        {alert && <p data-testid="10" className="alert">Usuário já registrado</p>}
+        {alert && <p data-testid="common_register__element-invalid_register" className="alert">Usuário já registrado</p>}
       </form>
     </LayoutLogin>
   );

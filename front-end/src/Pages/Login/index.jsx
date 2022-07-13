@@ -59,7 +59,7 @@ export default function Login() {
             type="email"
             value={ email }
             onChange={ ({ target }) => setEmail(target.value) }
-            data-testid="1"
+            data-testid="common_login__input-email"
           />
           <span className="focus-input" data-placeholder="E-mail" />
         </div>
@@ -70,7 +70,7 @@ export default function Login() {
             type="password"
             value={ password }
             onChange={ ({ target }) => setPassword(target.value) }
-            data-testid="2"
+            data-testid="common_login__input-password"
           />
           <span className="focus-input" data-placeholder="Senha" />
         </div>
@@ -81,7 +81,7 @@ export default function Login() {
             onClick={ (event) => validData(event) }
             disabled={ !activeButton }
             type="submit"
-            data-testid="3"
+            data-testid="common_login__button-login"
           >
             Entrar
           </button>
@@ -89,11 +89,11 @@ export default function Login() {
 
         <div className="create-account-text-center">
           <span className="create-account-text">Não possui conta?</span>
-          <Link to="/register" className="create-account-link" data-testid="4">
+          <Link to="/register" className="create-account-link" data-testid="common_login__button-register">
             Criar conta.
           </Link>
         </div>
-        {alert && <p data-testid="5" className="alert">Usuario ou senha incorreto</p>}
+        {alert && <p data-testid="common_login__element-invalid-email" className="alert">Usuario ou senha incorreto</p>}
       </form>
     </LayoutLogin>
   );
