@@ -3,13 +3,9 @@ const SaleService = require('../service');
 const findAll = async (req, res) => {
   const { id, role } = req.user;
 
-  if (role === 'customer') {
-    const { statusCode, payload } = await SaleService.findAllByCostumer(id);
+  const { statusCode, payload } = await SaleService.findAll(role, id);
 
-    return res.status(statusCode).json(payload);
-  }
-
-  res.json({ message: 'Not implemented yet' });
+  return res.status(statusCode).json(payload);
 };
 
 module.exports = {
