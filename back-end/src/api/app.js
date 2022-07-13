@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 require('express-async-errors');
 
-const { costumerRouter, sellerRouter } = require('../shared/http/routes');
+const { costumerRouter, sellerRouter, productsRouter } = require('../shared/http/routes');
 const { errorHandler } = require('../shared/http/middleware/ErrorHandler');
 
 const app = express();
