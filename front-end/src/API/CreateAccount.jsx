@@ -4,15 +4,15 @@ import API_URL from './API_URL';
 const CreateAccount = async (
   name,
   email,
-  password
+  password,
 ) => {
   const response = await axios
-    .post(`${API_URL}user`, {
+    .post(`${API_URL}register`, {
       name,
       email,
       password,
     })
-    .then((response) => response.data)
+    .then((Response) => Response.data)
     .catch((error) => error);
 
   return response;

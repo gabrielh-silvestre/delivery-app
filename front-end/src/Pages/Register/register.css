@@ -73,19 +73,19 @@ input:focus {
   outline: 0;
 }
 
-.input:focus + .focus-input::after {
+.has-value + .focus-input:after {
   top: -15px;
 }
 
-.input:focus + .focus-input::before {
+.has-value + .focus-input:before {
   width: 100%;
 }
 
-.has-value + .focus-input::after {
+.input:focus + .focus-input:after {
   top: -15px;
 }
 
-.has-value + .focus-input::before {
+.input:focus + .focus-input:before {
   width: 100%;
 }
 
@@ -111,7 +111,7 @@ input:focus {
   width: 100%;
 }
 
-.register-form-btn:hover:not(:disabled) {
+.register-form-btn:hover:not( :disabled ) {
   cursor: pointer;
 }
 
