@@ -2,43 +2,43 @@ import { Link, useHistory } from 'react-router-dom';
 import React, { useContext, useEffect, useState } from 'react';
 import LayoutLogin from '../../Components/Layout/Login';
 import DeliveryAppLogo from '../../images/DeliveryApp_Logo.png';
-import Enter from '../../API/Enter';
 import context from '../../Context/Context';
-import './login.css';
+import './register.css';
+import CreateAccount from '../../API/CreateAccount';
 
-export default function Login() {
+export default function Register() {
   const [password, setPassword] = useState('');
   const [activeButton, setActiveButton] = useState(false);
   const [alert, setAlert] = useState(false);
-  const { setName, email, setEmail, setToken, setRole } = useContext(context);
+  const { name, setName, email, setEmail, setToken, setRole } = useContext(context);
   const history = useHistory();
 
   useEffect(() => {
     const regexEmail = /\S+@\S+\.\S+/;
     const minimumCharactersForPassword = 6;
+    const minimumCharactersForName = 12;
 
     if (
       password.length >= minimumCharactersForPassword
       && regexEmail.test(email)
+      && name.length >= minimumCharactersForName
     ) {
       setActiveButton(true);
     } else {
       setActiveButton(false);
     }
-  }, [email, password]);
+  }, [name, email, password]);
 
   const validData = async (event) => {
     event.preventDefault();
 
-    const response = await Enter(email, password);
+    const response = await CreateAccount(name, email, password);
 
     if (response && response.message) {
       setAlert(true);
       return;
     }
 
-    setName(response.name);
-    setEmail(email);
     setToken(response.token);
     setRole(response.role);
     history.push('/customer/products');
@@ -46,12 +46,22 @@ export default function Login() {
 
   return (
     <LayoutLogin>
-      <form className="login-form">
-        {/* <span className="login-form-title">Bem vindo! 😃</span> */}
-
-        <span className="login-form-title">
+      <form className="register-form">
+        <span className="register-form-title register-logotipo">
           <img src={ DeliveryAppLogo } alt="imagem da logotipo" />
         </span>
+
+        <div className="wrap-input">
+          <input
+            className={ `input ${name.length > 0 && 'has-value'}` }
+            type="text"
+            minLength={ 3 }
+            value={ name }
+            onChange={ ({ target }) => setName(target.value) }
+            data-testid="common_register__input-name"
+          />
+          <span className="focus-input" data-placeholder="Nome" />
+        </div>
 
         <div className="wrap-input">
           <input
@@ -59,7 +69,7 @@ export default function Login() {
             type="email"
             value={ email }
             onChange={ ({ target }) => setEmail(target.value) }
-            data-testid="common_login__input-email"
+            data-testid="common_register__input-email"
           />
           <span className="focus-input" data-placeholder="E-mail" />
         </div>
@@ -68,41 +78,38 @@ export default function Login() {
           <input
             className={ password.length > 0 ? 'input has-value' : 'input' }
             type="password"
+            minLength={ 6 }
             value={ password }
             onChange={ ({ target }) => setPassword(target.value) }
-            data-testid="common_login__input-password"
+            data-testid="common_register__input-password"
           />
           <span className="focus-input" data-placeholder="Senha" />
         </div>
 
-        <div className="container-login-form-btn">
+        <div className="container-register-form-btn">
           <button
-            className={ `login-form-btn ${!activeButton && 'btn-off'}` }
+            className={ `register-form-btn ${!activeButton && 'btn-off'}` }
             onClick={ (event) => validData(event) }
             disabled={ !activeButton }
             type="submit"
-            data-testid="common_login__button-login"
+            data-testid="common_register__button-register"
           >
-            Entrar
+            Registrar
           </button>
         </div>
 
         <div className="create-account-text-center">
-          <span className="create-account-text">Não possui conta?</span>
-          <Link
-            to="/register"
-            className="create-account-link"
-            data-testid="common_login__button-register"
-          >
-            Criar conta.
+          <span className="create-account-text">Já possui conta?</span>
+          <Link to="/login" className="login-account-link">
+            Fazer login.
           </Link>
         </div>
         {alert && (
           <p
-            data-testid="common_login__element-invalid-email"
+            data-testid="common_register__element-invalid_register"
             className="alert"
           >
-            Usuario ou senha incorreto
+            Usuário já registrado
           </p>
         )}
       </form>
