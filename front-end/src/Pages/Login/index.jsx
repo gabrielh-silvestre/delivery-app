@@ -89,11 +89,22 @@ export default function Login() {
 
         <div className="create-account-text-center">
           <span className="create-account-text">Não possui conta?</span>
-          <Link to="/register" className="create-account-link" data-testid="common_login__button-register">
+          <Link
+            to="/register"
+            className="create-account-link"
+            data-testid="common_login__button-register"
+          >
             Criar conta.
           </Link>
         </div>
-        {alert && <p data-testid="common_login__element-invalid-email" className="alert">Usuario ou senha incorreto</p>}
+        {alert && (
+          <p
+            data-testid="common_login__element-invalid-email"
+            className="alert"
+          >
+            Usuario ou senha incorreto
+          </p>
+        )}
       </form>
     </LayoutLogin>
   );

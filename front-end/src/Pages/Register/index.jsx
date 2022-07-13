@@ -104,7 +104,14 @@ export default function Register() {
             Fazer login.
           </Link>
         </div>
-        {alert && <p data-testid="common_register__element-invalid_register" className="alert">Usuário já registrado</p>}
+        {alert && (
+          <p
+            data-testid="common_register__element-invalid_register"
+            className="alert"
+          >
+            Usuário já registrado
+          </p>
+        )}
       </form>
     </LayoutLogin>
   );
