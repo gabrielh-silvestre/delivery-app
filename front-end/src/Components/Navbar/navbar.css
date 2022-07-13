@@ -66,8 +66,8 @@ a:hover {
   text-decoration: none;
 }
 
-@media ( max-width:999px ) {
-  
+@media ( max-width : 999px ) {
+
   .navbar {
     overflow-x: hidden;
   }
