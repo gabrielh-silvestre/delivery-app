@@ -82,9 +82,10 @@ function ProductCard({ cardProduct }) {
       >
         -
       </button>
-      <span data-testid={ `customer_products__input-card-quantity--${id}` }>
-        { productQty }
-      </span>
+      <input
+        data-testid={ `customer_products__input-card-quantity--${id}` }
+        value={ productQty }
+      />
       <button
         data-testid={ `customer_products__button-card-add-item--${id}` }
         type="button"
