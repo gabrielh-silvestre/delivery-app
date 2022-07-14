@@ -60,33 +60,33 @@ function ProductCard({ cardProduct }) {
   return (
     <div>
 
-      <span data-testid={ `customer_products__element-card-price-${id}` }>
+      <span data-testid={ `customer_products__element-card-price--${id}` }>
         { price }
       </span>
 
       <img
-        data-testid={ `customer_products__img-card-bg-image-${id}` }
+        data-testid={ `customer_products__img-card-bg-image--${id}` }
         src={ image }
         alt={ name }
       />
 
-      <span data-testid={ `customer_products__element-card-title-${id}` }>
+      <span data-testid={ `customer_products__element-card-title--${id}` }>
         { name }
       </span>
 
       <button
-        data-testid={ `customer_products__button-card-rm-item-${id}` }
+        data-testid={ `customer_products__button-card-rm-item--${id}` }
         type="button"
         disabled={ !activeButton }
         onClick={ handleRemoveItem }
       >
         -
       </button>
-      <span data-testid={ `customer_products__input-card-quantity-${id}` }>
+      <span data-testid={ `customer_products__input-card-quantity--${id}` }>
         { productQty }
       </span>
       <button
-        data-testid={ `customer_products__button-card-add-item-${id}` }
+        data-testid={ `customer_products__button-card-add-item--${id}` }
         type="button"
         onClick={ handleAddItem }
       >
