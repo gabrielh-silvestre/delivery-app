@@ -41,7 +41,7 @@ export default function Login() {
       return;
     }
 
-    localStorage.setItem('pessoa', JSON.stringify({
+    localStorage.setItem('user', JSON.stringify({
       name: response.name,
       email,
       role: response.role,

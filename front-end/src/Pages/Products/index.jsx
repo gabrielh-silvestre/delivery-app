@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import NavBar from '../../Components/Navbar';
 import getProducts from '../../API/GetProducts';
 import ProductCard from '../../Components/Products/ProductCard';
@@ -6,6 +7,7 @@ import ProductCard from '../../Components/Products/ProductCard';
 function Products() {
   const [products, setProducts] = useState([]);
 
+  const history = useHistory();
   const linksProducts = [
     {
       name: 'Produtos',
@@ -25,6 +27,14 @@ function Products() {
       allProducts.forEach((item) => { item.quantity = 0; });
       setProducts(allProducts);
     };
+
+    const user = JSON.parse(localStorage.getItem('user'));
+    const minimumCharactersForToken = 50;
+
+    if (!user || user.token.length < minimumCharactersForToken) {
+      localStorage.removeItem('user');
+      history.push('/login');
+    }
 
     componentDidMount();
   }, []);
