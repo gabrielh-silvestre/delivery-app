@@ -70,9 +70,24 @@ const updatePreparing = async (id, role) => {
     };
 };
 
+const updateDelivering = async (id, role) => {
+  if (role === 'customer') {
+    return { statusCode: 401 };
+  }
+
+  const foundSaleId = await SaleModel.findByIdByDelivering(id);
+  
+  if (foundSaleId === null) throw new NotFoundError(saleNotFound);
+
+    return {
+      statusCode: 200,
+    };
+};
+
 module.exports = {
   findAll,
   findById,
   updatePending,
   updatePreparing,
+  updateDelivering,
 };
