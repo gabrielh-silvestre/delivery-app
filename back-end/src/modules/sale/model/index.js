@@ -1,4 +1,9 @@
-const { Sale, Product, User } = require('../../../database/models');
+const {
+  Sale,
+  Product,
+  SaleProduct,
+  User,
+} = require('../../../database/models');
 
 const {
   sellerSaleReturnNormalizer,
@@ -98,6 +103,31 @@ const findByIdByDelivered = async (id) => {
 
   await Sale.update({ status: 'ENTREGUE' }, { where: { id } });
   return true;
+
+const createNewSale = async ({
+  userId,
+  sellerId,
+  totalPrice,
+  deliveryAddress,
+  deliveryNumber,
+}) => {
+  const newSale = await Sale.create({
+    userId,
+    sellerId,
+    totalPrice,
+    deliveryAddress,
+    deliveryNumber,
+    status: 'PENDENTE',
+  });
+  return newSale;
+};
+
+const addProductToSale = async ({ saleId, productId, quantity }) => {
+  await SaleProduct.create({
+    saleId,
+    productId,
+    quantity,
+  });
 };
 
 module.exports = {
@@ -109,4 +139,6 @@ module.exports = {
   findByIdByPreparing,
   findByIdByDelivering,
   findByIdByDelivered,
+  createNewSale,
+  addProductToSale,
 };
