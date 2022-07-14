@@ -17,7 +17,17 @@ const findById = async (req, res) => {
   return res.status(statusCode).json(payload);
 };
 
+const updatePending = async (req, res) => {
+  const { role } = req.user;
+  const { id } = req.params;
+  
+  const { statusCode, payload } = await SaleService.updatePending(id, role);
+
+  return res.status(statusCode).json(payload);
+};
+
 module.exports = {
   findAll,
   findById,
+  updatePending,
 };

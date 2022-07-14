@@ -40,7 +40,22 @@ const findById = async (role, userId, saleId) => {
   throw new UnauthorizedError('You are not authorized to access this resource');
 };
 
+const updatePending = async (id, role) => {
+  if (role === 'customer') {
+    return { statusCode: 401 };
+  }
+
+  const foundSaleId = await SaleModel.findByIdByPending(id);
+  
+  if (foundSaleId === null) throw new NotFoundError('Sale not found');
+
+    return {
+      statusCode: 200,
+    };
+};
+
 module.exports = {
   findAll,
   findById,
+  updatePending,
 };

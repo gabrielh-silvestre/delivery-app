@@ -64,9 +64,19 @@ const findByIdBySeller = async (sellerId, saleId) => {
   return sale ? detailedSaleFormatter(sale) : null;
 };
 
+const findByIdByPending = async (id) => {
+  const sale = await Sale.findOne({ where: { id } });
+
+  if (!sale) return null;
+
+  await Sale.update({ status: 'PENDENTE' }, { where: { id } });
+  return true;
+};
+
 module.exports = {
   findAllByCostumer,
   findAllBySeller,
   findByIdByCostumer,
   findByIdBySeller,
+  findByIdByPending,
 };
