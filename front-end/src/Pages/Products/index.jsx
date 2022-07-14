@@ -37,7 +37,7 @@ function Products() {
     }
 
     componentDidMount();
-  }, []);
+  }, [history]);
 
   return (
     <div>

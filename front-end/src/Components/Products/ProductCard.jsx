@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import productContext from '../../Context/ProductsContext';
 
 function ProductCard({ cardProduct }) {
-  const { id, name, image, price } = cardProduct;
+  const { id, name, url_image: image, price } = cardProduct;
 
   const { products, setProducts } = useContext(productContext);
   const [activeButton, setActiveButton] = useState(false);
@@ -102,7 +102,7 @@ ProductCard.propTypes = {
   cardProduct: PropTypes.shape({
     id: PropTypes.number,
     name: PropTypes.string,
-    image: PropTypes.string,
+    url_image: PropTypes.string,
     price: PropTypes.string,
     quantity: PropTypes.number,
   }).isRequired,
