@@ -22,7 +22,7 @@ function Products() {
   useEffect(() => {
     const componentDidMount = async () => {
       const allProducts = await getProducts();
-      allProducts.quantity = 0;
+      allProducts.forEach((item) => { item.quantity = 0; });
       setProducts(allProducts);
     };
 
@@ -32,7 +32,7 @@ function Products() {
   return (
     <div>
       <NavBar links={ linksProducts } />
-    
+
       <main>
         {
           products.map((product) => (
@@ -41,7 +41,7 @@ function Products() {
         }
       </main>
     </div>
-  )
+  );
 }
 
 export default Products;

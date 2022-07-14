@@ -3,18 +3,27 @@ import PropTypes from 'prop-types';
 import productContext from '../../Context/ProductsContext';
 
 function ProductCard({ cardProduct }) {
-  const { id, name, image, price, quantity } = cardProduct;
+  const { id, name, image, price } = cardProduct;
 
   const { products, setProducts } = useContext(productContext);
   const [activeButton, setActiveButton] = useState(false);
+  const [productQty, setProductQty] = useState(0);
 
   useEffect(() => {
-    if (products.quantity <= 0) setActiveButton(false);
+    if (productQty <= 0) setActiveButton(false);
     else setActiveButton(true);
-  }, [products]);
+  }, [productQty]);
+
+  useEffect(() => {
+    const product = products.find((item) => item.id === id);
+    if (!product) return null;
+
+    setProductQty(product.quantity);
+  }, [id, products]);
 
   const handleRemoveItem = () => {
-    cardProduct.quantity -= 1;
+    setProductQty(productQty - 1);
+    cardProduct.quantity = productQty;
 
     if (products.find((item) => item.id === id) === undefined) {
       return setProducts((prevProducts) => {
@@ -31,7 +40,8 @@ function ProductCard({ cardProduct }) {
   };
 
   const handleAddItem = () => {
-    cardProduct.quantity += 1;
+    setProductQty(productQty + 1);
+    cardProduct.quantity = productQty;
 
     if (products.find((item) => item.id === id) === undefined) {
       return setProducts((prevProducts) => {
@@ -73,7 +83,7 @@ function ProductCard({ cardProduct }) {
         -
       </button>
       <span data-testid={ `customer_products__input-card-quantity-${id}` }>
-        { quantity }
+        { productQty }
       </span>
       <button
         data-testid={ `customer_products__button-card-add-item-${id}` }
@@ -93,7 +103,7 @@ ProductCard.propTypes = {
     id: PropTypes.number,
     name: PropTypes.string,
     image: PropTypes.string,
-    price: PropTypes.number,
+    price: PropTypes.string,
     quantity: PropTypes.number,
   }).isRequired,
 };

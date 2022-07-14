@@ -11,9 +11,9 @@ function ProductProvider({ children }) {
   };
 
   return (
-    <context.ProductProvider value={ contextValue }>
+    <context.Provider value={ contextValue }>
       { children }
-    </context.ProductProvider>
+    </context.Provider>
   );
 }
 
