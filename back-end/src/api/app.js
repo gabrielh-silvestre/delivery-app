@@ -14,6 +14,7 @@ app.use(cors('*'));
 app.use('/products', productsRouter);
 app.use('/user', userRouter);
 app.use('/sales', saleRouter);
+app.use(express.static('public'));
 
 app.use(errorHandler);
 
