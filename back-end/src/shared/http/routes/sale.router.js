@@ -9,5 +9,6 @@ const saleRouter = Router();
 saleRouter.get('/', authHandler, SaleController.findAll);
 saleRouter.get('/:id', authHandler, SaleController.findById);
 saleRouter.patch('/pending/:id', authHandler, SaleController.updatePending);
+saleRouter.patch('/preparing/:id', authHandler, SaleController.updatePreparing);
 
 module.exports = { saleRouter };

@@ -2,6 +2,8 @@ const { UnauthorizedError, NotFoundError } = require('restify-errors');
 
 const SaleModel = require('../model');
 
+const saleNotFound = 'Sale not found';
+
 const findAll = async (role, costumerId) => {
   const finds = {
     customer: SaleModel.findAllByCostumer,
@@ -29,7 +31,7 @@ const findById = async (role, userId, saleId) => {
   if (role === 'customer' || role === 'seller') {
     const foundSale = await finds[role](userId, saleId);
 
-    if (foundSale === null) throw new NotFoundError('Sale not found');
+    if (foundSale === null) throw new NotFoundError(saleNotFound);
 
     return {
       statusCode: 200,
@@ -47,7 +49,21 @@ const updatePending = async (id, role) => {
 
   const foundSaleId = await SaleModel.findByIdByPending(id);
   
-  if (foundSaleId === null) throw new NotFoundError('Sale not found');
+  if (foundSaleId === null) throw new NotFoundError(saleNotFound);
+
+    return {
+      statusCode: 200,
+    };
+};
+
+const updatePreparing = async (id, role) => {
+  if (role === 'customer') {
+    return { statusCode: 401 };
+  }
+
+  const foundSaleId = await SaleModel.findByIdByPreparing(id);
+  
+  if (foundSaleId === null) throw new NotFoundError(saleNotFound);
 
     return {
       statusCode: 200,
@@ -58,4 +74,5 @@ module.exports = {
   findAll,
   findById,
   updatePending,
+  updatePreparing,
 };

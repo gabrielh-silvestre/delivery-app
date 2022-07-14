@@ -26,8 +26,18 @@ const updatePending = async (req, res) => {
   return res.status(statusCode).json(payload);
 };
 
+const updatePreparing = async (req, res) => {
+  const { role } = req.user;
+  const { id } = req.params;
+  
+  const { statusCode, payload } = await SaleService.updatePreparing(id, role);
+
+  return res.status(statusCode).json(payload);
+};
+
 module.exports = {
   findAll,
   findById,
   updatePending,
+  updatePreparing,
 };

@@ -73,10 +73,20 @@ const findByIdByPending = async (id) => {
   return true;
 };
 
+const findByIdByPreparing = async (id) => {
+  const sale = await Sale.findOne({ where: { id } });
+
+  if (!sale) return null;
+
+  await Sale.update({ status: 'PREPARANDO' }, { where: { id } });
+  return true;
+};
+
 module.exports = {
   findAllByCostumer,
   findAllBySeller,
   findByIdByCostumer,
   findByIdBySeller,
   findByIdByPending,
+  findByIdByPreparing,
 };
