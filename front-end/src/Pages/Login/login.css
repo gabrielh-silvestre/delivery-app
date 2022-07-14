@@ -137,7 +137,10 @@ input:focus {
 }
 
 .create-account-link {
+  background-color: #de9156;
+  border: none;
   color: #343333;
+  cursor: pointer;
   font-size: 14px;
   line-height: 1.5;
   text-decoration: none;

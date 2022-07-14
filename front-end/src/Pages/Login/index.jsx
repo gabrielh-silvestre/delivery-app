@@ -41,11 +41,19 @@ export default function Login() {
       return;
     }
 
+    localStorage.setItem('user', JSON.stringify({
+      name: response.name,
+      email,
+      role: response.role,
+      token: response.token,
+    }));
+
     setName(response.name);
     setEmail(email);
     setToken(response.token);
     setRole(response.role);
-    history.push('/customer/products');
+
+    if (response.role === 'customer') history.push('/customer/products');
   };
 
   return (
