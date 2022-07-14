@@ -91,6 +91,15 @@ const findByIdByDelivering = async (id) => {
   return true;
 };
 
+const findByIdByDelivered = async (id) => {
+  const sale = await Sale.findOne({ where: { id } });
+
+  if (!sale) return null;
+
+  await Sale.update({ status: 'ENTREGUE' }, { where: { id } });
+  return true;
+};
+
 module.exports = {
   findAllByCostumer,
   findAllBySeller,
@@ -99,4 +108,5 @@ module.exports = {
   findByIdByPending,
   findByIdByPreparing,
   findByIdByDelivering,
+  findByIdByDelivered,
 };

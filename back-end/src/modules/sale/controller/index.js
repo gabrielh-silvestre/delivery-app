@@ -44,10 +44,20 @@ const updateDelivering = async (req, res) => {
   return res.status(statusCode).json(payload);
 };
 
+const updateDelivered = async (req, res) => {
+  const { role } = req.user;
+  const { id } = req.params;
+  
+  const { statusCode, payload } = await SaleService.updateDelivered(id, role);
+
+  return res.status(statusCode).json(payload);
+};
+
 module.exports = {
   findAll,
   findById,
   updatePending,
   updatePreparing,
   updateDelivering,
+  updateDelivered,
 };
