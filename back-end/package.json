@@ -1,4 +1,4 @@
-{
+  {
   "name": "delivery-app-back-end",
   "version": "0.1.0",
   "description": "Back-end do projeto App de Delivery",
@@ -9,9 +9,8 @@
   "engineStrict": true,
   "private": true,
   "scripts": {
-    "db:reset": "npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
     "start": "node .",
-    "predev": "npm run db:reset",
+    "predev": "sequelize-cli db:drop && sequelize-cli db:create && sequelize-cli db:migrate && sequelize-cli db:seed:all",
     "dev": "nodemon .",
     "test": "mocha src/tests/**/*$NAME*.test.js --exit",
     "test:coverage": "nyc --all npm run test",
