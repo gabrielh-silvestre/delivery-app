@@ -17,7 +17,16 @@ const findById = async (req, res) => {
   return res.status(statusCode).json(payload);
 };
 
+const create = async (req, res) => {
+  const { id, role } = req.user;
+
+  const { statusCode } = await SaleService.create(role, id, req.body);
+
+  return res.status(statusCode).end();
+};
+
 module.exports = {
   findAll,
   findById,
+  create,
 };
