@@ -1,13 +1,13 @@
 const { celebrate, Joi, Segments } = require('celebrate');
 
-const validateSignInCostumer = celebrate({
+const validateUserLogin = celebrate({
   [Segments.BODY]: Joi.object({
     email: Joi.string().email().required(),
     password: Joi.string().min(6).required(),
   }),
 });
 
-const validateSignUpCostumer = celebrate({
+const validateUserRegister = celebrate({
   [Segments.BODY]: Joi.object({
     name: Joi.string().min(12).required(),
     email: Joi.string().email().required(),
@@ -16,6 +16,6 @@ const validateSignUpCostumer = celebrate({
 });
 
 module.exports = {
-  validateSignInCostumer,
-  validateSignUpCostumer,
+  validateUserLogin,
+  validateUserRegister,
 };

@@ -3,7 +3,7 @@ import API_URL from './API_URL';
 
 const Enter = async (email, password) => {
   const response = await axios
-    .post(`${API_URL}login`, {
+    .post(`${API_URL}user/login`, {
       email,
       password,
     })

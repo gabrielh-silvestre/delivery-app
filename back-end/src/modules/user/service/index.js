@@ -7,7 +7,7 @@ const { generateToken } = require('../../../shared/utils/auth');
 
 const INVALID_EMAIL_OR_PASSWORD = 'Invalid email or password';
 
-const signIn = async ({ email, password }) => {
+const login = async ({ email, password }) => {
   const foundCustomer = await CustomerModel.findByEmail(email);
 
   if (!foundCustomer) {
@@ -27,7 +27,7 @@ const signIn = async ({ email, password }) => {
   };
 };
 
-const signUp = async ({ name, email, password }) => {
+const register = async ({ name, email, password }) => {
   const foundCustomer = await CustomerModel.findByEmail(email);
 
   if (foundCustomer) {
@@ -44,12 +44,12 @@ const signUp = async ({ name, email, password }) => {
   const token = generateToken({ id, role });
 
   return {
-    statusCode: 200,
+    statusCode: 201,
     payload: { name, role, email, token },
   };
 };
 
 module.exports = {
-  signIn,
-  signUp,
+  login,
+  register,
 };
