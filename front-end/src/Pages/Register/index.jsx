@@ -39,7 +39,7 @@ export default function Register() {
       return;
     }
 
-    localStorage.setItem('pessoa', JSON.stringify({
+    localStorage.setItem('user', JSON.stringify({
       name,
       email,
       role: response.role,

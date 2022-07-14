@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import DeliveryAppName from '../../images/DeliveryApp_Name.png';
 import context from '../../Context/Context';
@@ -9,14 +9,25 @@ import './navbar.css';
 
 function NavBar({ links }) {
   const [activeMenu, setActiveMenu] = useState(false);
-  const { name } = useContext(context);
+  const { name, setName, setEmail, setToken, setRole } = useContext(context);
 
   const history = useHistory();
 
   const exit = () => {
-    localStorage.removeItem('pessoa');
+    localStorage.removeItem('user');
     history.push('/login');
   };
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    if (!name && user && user.name) {
+      setName(user.name);
+      setEmail(user.email);
+      setToken(user.token);
+      setRole(user.role);
+    }
+  });
 
   return (
     <header>
