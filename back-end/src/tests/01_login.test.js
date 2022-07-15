@@ -10,7 +10,7 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 
-describe('Rota /login', () => {
+describe('Rota user/login', () => {
   let chaiHttpResponse;
 
   before(() => {
@@ -32,7 +32,7 @@ describe('Rota /login', () => {
   it('Essa requisição deve retornar código de status 200 caso os dados sejam VÁLIDOS', async () => {
     chaiHttpResponse = await chai
       .request(server)
-      .post('/costumers/signIn')
+      .post('/user/login')
       .send({
         "email": "zebirita@email.com",
         "password": "$#zebirita#$"
@@ -45,27 +45,45 @@ describe('Rota /login', () => {
   it('A requisição POST para /login deve retornar um usuário caso os dados sejam VÁLIDOS', async () => {
     chaiHttpResponse = await chai
       .request(server)
-      .post('/costumers/signIn')
+      .post('/user/login')
       .send({
-        "email": "adm@deliveryapp.com",
-        "password": "--adm2@21!!--"
+        "email": "zebirita@email.com",
+        "password": "$#zebirita#$"
       });
+    console.log(chaiHttpResponse.body)
+    
 
-    expect(chaiHttpResponse.body).to.haveOwnProperty('message');
-    // expect(chaiHttpResponse.body).to.haveOwnProperty('email');
-    // expect(chaiHttpResponse.body).to.haveOwnProperty('role');
-    // expect(chaiHttpResponse.body).to.haveOwnProperty('token');
+    expect(chaiHttpResponse.body).to.haveOwnProperty('name');
+    expect(chaiHttpResponse.body).to.haveOwnProperty('email');
+    expect(chaiHttpResponse.body).to.haveOwnProperty('role');
+    expect(chaiHttpResponse.body).to.haveOwnProperty('token');
   });
 
-  it('Essa requisição deve retornar código de status 401 caso os dados sejam INVÁLIDOS', async () => {
+  it('Essa requisição deve retornar código de status 404 caso os dados sejam INVÁLIDOS', async () => {
     chaiHttpResponse = await chai
       .request(server)
-      .post('/costumers/signIn')
+      .post('/user/login')
       .send({
         "email": "invalid@deliveryapp.com",
         "password": "invalid"
-      });
+    });
+    console.log(chaiHttpResponse.body)
+
 
     expect(chaiHttpResponse.status).to.be.equal(404);
+  });
+
+  it('Essa requisição deve retornar retornar uma MENSAGEM caso os dados sejam INVÁLIDOS', async () => {
+    chaiHttpResponse = await chai
+      .request(server)
+      .post('/user/login')
+      .send({
+        "email": "invalid@deliveryapp.com",
+        "password": "invalid"
+    });
+    console.log(chaiHttpResponse.body)
+
+
+    expect(chaiHttpResponse.body).to.haveOwnProperty('message');
   });
 });
