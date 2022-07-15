@@ -21,50 +21,13 @@ function Checkout() {
     },
   ];
 
-  const products = [
-    {
-      id: 1,
-      name: 'Produtos',
-      price: 100.92,
-      quantity: 5,
-    },
-    {
-      id: 2,
-      name: 'Produtos',
-      price: 100.92,
-      quantity: 5,
-    },
-    {
-      id: 3,
-      name: 'Produtos',
-      price: 100.92,
-      quantity: 5,
-    },
-    {
-      id: 4,
-      name: 'Produtos',
-      price: 100.92,
-      quantity: 5,
-    },
-    {
-      id: 5,
-      name: 'Produtos',
-      price: 100.92,
-      quantity: 5,
-    },
-    {
-      id: 6,
-      name: 'Produtos',
-      price: 10.92,
-      quantity: 5,
-    },
-  ];
-
   const { card, setCard, setSellerList } = useContext(context);
 
   useEffect(() => {
-    setCard(products);
+    const products = fetchInformationFromLocalstorage('products');
     const user = fetchInformationFromLocalstorage('user');
+
+    setCard(products);
 
     const fetchData = async () => {
       const data = await searchUser(user.token, 'seller');
@@ -87,12 +50,12 @@ function Checkout() {
               data-testid="customer_checkout__element-order-total-price"
             >
               Valor total:
-              {` ${card
+              {card ? ` ${card
                 .reduce(
                   (previous, current) => previous + current.price * current.quantity,
                   0,
                 )
-                .toLocaleString('pt-br', { minimumFractionDigits: 2 })}`}
+                .toLocaleString('pt-br', { minimumFractionDigits: 2 })}` : ' 0,00'}
             </h3>
           </div>
         </div>

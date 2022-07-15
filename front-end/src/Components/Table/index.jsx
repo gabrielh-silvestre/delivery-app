@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import context from '../../Context/Context';
+import { saveInformationToLocalstorage } from '../../Service/LocalSotorage';
 import './table.css';
 
 // tabela responsiva baseada no vídeo: https://youtu.be/ZtopjfXhUZI
@@ -10,6 +11,7 @@ function Table() {
   const removeProduct = (id) => {
     const updated = card.filter((current) => current.id !== id);
     setCard(updated);
+    saveInformationToLocalstorage('products', updated);
   };
 
   return (
@@ -23,7 +25,7 @@ function Table() {
         <th>Romover Item</th>
       </thead>
       <tbody>
-        {card.map((current, index) => (
+        {card && card.map((current, index) => (
           <tr key={ index }>
             <td
               data-label="Item"
