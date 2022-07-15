@@ -26,7 +26,7 @@ describe("Rota GET /sales", () => {
   let saleModelStub;
   let tokenStub;
 
-  before(async () => {
+  before(() => {
     tokenStub = sinon.stub(auth, "verifyToken");
     saleModelStub = sinon.stub(Sale, "findAll");
 
