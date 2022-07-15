@@ -102,7 +102,7 @@ const updateDelivering = async (id, role) => {
 };
 
 const updateDelivered = async (id, role) => {
-  if (role === 'customer') {
+  if (role === 'seller') {
     return { statusCode: 401 };
   }
 
