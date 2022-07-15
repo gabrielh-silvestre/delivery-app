@@ -10,122 +10,95 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 
-describe("Rota user/register", () => {
-  let modelStub;
+describe("Rota /register - CASOS DE FALHA", () => {
+  let chaiHttpResponse;
 
   before(() => {
-    modelStub = sinon.stub(User, "create");
-
-    modelStub.resolves({
-      id: 4,
-      name: "Cliente Zé Pinguinha",
-      email: "zepinguinha@email.com",
+    sinon.stub(User, "findOne").resolves({
+      id: 1,
+      name: "Cliente Zé Birita",
+      email: "zebirita@email.com",
+      password: "1c37466c159755ce1fa181bd247cb925",
       role: "customer",
     });
   });
 
   after(() => {
-    User.create.restore();
+    User.findOne.restore();
   });
 
-  it('Deve criar um novo usuário "customer" com sucesso', async () => {
-    const response = await chai.request(server).post("/user/register").send({
-      name: "Cliente Zé Pinguinha",
-      email: "zepinguinha@email.com",
-      password: "$#zepinguinha#$",
+  it("Essa requisição deve falhar caso o email enviado na requisição já exista no banco de dados", async () => {
+    chaiHttpResponse = await chai.request(server).post("/user/register").send({
+      name: "Cliente Zé Birita",
+      email: "zebirita@email.com",
+      password: "$#zebirita#$",
     });
 
-    expect(response.status).to.be.equal(201);
-    expect(response.body).to.be.an("object");
-
-    expect(response.body).to.have.property("token");
-    expect(response.body).to.have.property("name");
-    expect(response.body).to.have.property("email");
-    expect(response.body).to.have.property("role");
-
-    expect(response.body.role).to.be.equal("customer");
+    expect(chaiHttpResponse.body).to.haveOwnProperty("message");
   });
 
-  it("Não deve criar um novo usuário sem email", async () => {
-    const response = await chai.request(server).post("/user/register").send({
-      name: "Cliente Zé Pinguinha",
-      password: "$#zepinguinha#$",
+  it("Essa requisição deve retornar status 409 caso o email já exista", async () => {
+    chaiHttpResponse = await chai.request(server).post("/user/register").send({
+      name: "Cliente Zé Birita",
+      email: "zebirita@email.com",
+      password: "$#zebirita#$",
     });
 
-    expect(response.status).to.be.equal(400);
-    expect(response.body).to.be.an("object");
-    expect(response.body).to.have.property("message");
-    expect(response.body.message).to.be.equal('"email" is required');
+    expect(chaiHttpResponse.status).to.be.equal(409);
   });
 
-  it("Não deve criar um novo usuário com email inválido", async () => {
-    const response = await chai.request(server).post("/user/register").send({
-      name: "Cliente Zé Pinguinha",
-      email: "zepinguinha@",
-      password: "$#zepinguinha#$",
+  it("Essa requisição deve falhar caso o email não seja especificado", async () => {
+    chaiHttpResponse = await chai.request(server).post("/user/register").send({
+      name: "Cliente Zé Birita",
+      password: "$#zebirita#$",
     });
 
-    expect(response.status).to.be.equal(422);
-    expect(response.body).to.be.an("object");
-    expect(response.body).to.have.property("message");
-    expect(response.body.message).to.be.equal('"email" must be a valid email');
+    expect(chaiHttpResponse.body).to.haveOwnProperty("message");
+    expect(chaiHttpResponse.status).to.be.equal(400);
   });
 
-  it("Não deve criar um novo usuário sem nome", async () => {
-    const response = await chai.request(server).post("/user/register").send({
-      email: "zepinguinha@email.com",
-      password: "$#zepinguinha#$",
+  it("Essa requisição deve falhar caso a senha não seja especificada", async () => {
+    chaiHttpResponse = await chai.request(server).post("/user/register").send({
+      name: "Cliente Zé Birita",
+      email: "zebirita@email.com",
     });
 
-    expect(response.status).to.be.equal(400);
-    expect(response.body).to.be.an("object");
-
-    expect(response.body).to.have.property("message");
-    expect(response.body.message).to.be.equal('"name" is required');
+    expect(chaiHttpResponse.body).to.haveOwnProperty("message");
+    expect(chaiHttpResponse.status).to.be.equal(400);
   });
 
-  it("Não deve criar um novo usuário com nome inválido", async () => {
-    const response = await chai.request(server).post("/user/register").send({
-      name: "Zé",
-      email: "zepinguinha@email.com",
-      password: "$#zepinguinha#$",
+  it("Essa requisição deve falhar caso o nome não seja especificado", async () => {
+    chaiHttpResponse = await chai.request(server).post("/user/register").send({
+      email: "zebirita@email.com",
     });
 
-    expect(response.status).to.be.equal(422);
-    expect(response.body).to.be.an("object");
+    expect(chaiHttpResponse.body).to.haveOwnProperty("message");
+    expect(chaiHttpResponse.status).to.be.equal(400);
+  });
+});
 
-    expect(response.body).to.have.property("message");
-    expect(response.body.message).to.be.equal(
-      '"name" length must be at least 12 characters long'
-    );
+describe("Rota /register - CASOS DE SUCESSO", () => {
+  let chaiHttpResponse;
+
+  before(() => {
+    sinon.stub(User, "findOne").resolves();
   });
 
-  it("Não deve criar um novo usuário sem senha", async () => {
-    const response = await chai.request(server).post("/user/register").send({
-      name: "Cliente Zé Pinguinha",
-      email: "zepinguinha@email.com",
-    });
-
-    expect(response.status).to.be.equal(400);
-    expect(response.body).to.be.an("object");
-
-    expect(response.body).to.have.property("message");
-    expect(response.body.message).to.be.equal('"password" is required');
+  after(() => {
+    User.findOne.restore();
   });
 
-  it("Não deve criar um novo usuário com senha inválida", async () => {
-    const response = await chai.request(server).post("/user/register").send({
-      name: "Cliente Zé Pinguinha",
-      email: "zepinguinha@email.com",
-      password: "123",
+  it("Essa requisição deve ser bem sucedida caso o email não exista", async () => {
+    chaiHttpResponse = await chai.request(server).post("/user/register").send({
+      name: "Cliente Zé Birita",
+      email: "zebirita@email.com",
+      password: "$#zebirita#$",
     });
 
-    expect(response.status).to.be.equal(422);
-    expect(response.body).to.be.an("object");
-
-    expect(response.body).to.have.property("message");
-    expect(response.body.message).to.be.equal(
-      '"password" length must be at least 6 characters long'
-    );
+    expect(chaiHttpResponse.body).to.haveOwnProperty("name");
+    expect(chaiHttpResponse.body).to.haveOwnProperty("role");
+    expect(chaiHttpResponse.body).to.haveOwnProperty("email");
+    expect(chaiHttpResponse.body).to.haveOwnProperty("token");
+    expect(chaiHttpResponse.status).to.be.equal(201);
   });
 });

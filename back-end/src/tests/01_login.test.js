@@ -17,20 +17,12 @@ describe("Rota user/login", () => {
   before(() => {
     modelStub = sinon.stub(User, "findOne");
 
-    modelStub.onFirstCall().resolves({
+    modelStub.resolves({
       id: 3,
       name: "Cliente Zé Birita",
       email: "zebirita@email.com",
       password: "1c37466c159755ce1fa181bd247cb925",
       role: "customer",
-    });
-
-    modelStub.onSecondCall().resolves({
-      id: 1,
-      name: "Delivery App Admin",
-      email: "adm@deliveryapp.com",
-      password: "a4c86edecc5aee06eff8fdeda69e0d04",
-      role: "administrator",
     });
   });
 
@@ -49,24 +41,32 @@ describe("Rota user/login", () => {
 
   it("A requisição POST para /login deve retornar um usuário caso os dados sejam VÁLIDOS", async () => {
     chaiHttpResponse = await chai.request(server).post("/user/login").send({
-      email: "adm@deliveryapp.com",
-      password: "--adm2@21!!--",
+      email: "zebirita@email.com",
+      password: "$#zebirita#$",
     });
+    console.log(chaiHttpResponse.body);
 
-    expect(chaiHttpResponse.body).to.be.an("object");
-
-    expect(chaiHttpResponse.body).to.have.property("token");
-    expect(chaiHttpResponse.body).to.have.property("name");
-    expect(chaiHttpResponse.body).to.have.property("email");
-    expect(chaiHttpResponse.body).to.have.property("role");
+    expect(chaiHttpResponse.body).to.haveOwnProperty("name");
+    expect(chaiHttpResponse.body).to.haveOwnProperty("email");
+    expect(chaiHttpResponse.body).to.haveOwnProperty("role");
+    expect(chaiHttpResponse.body).to.haveOwnProperty("token");
   });
 
-  it("Essa requisição deve retornar código de status 401 caso os dados sejam INVÁLIDOS", async () => {
+  it("Essa requisição deve retornar código de status 404 caso os dados sejam INVÁLIDOS", async () => {
     chaiHttpResponse = await chai.request(server).post("/user/login").send({
       email: "invalid@deliveryapp.com",
       password: "invalid",
     });
 
     expect(chaiHttpResponse.status).to.be.equal(404);
+  });
+
+  it("Essa requisição deve retornar retornar uma MENSAGEM caso os dados sejam INVÁLIDOS", async () => {
+    chaiHttpResponse = await chai.request(server).post("/user/login").send({
+      email: "invalid@deliveryapp.com",
+      password: "invalid",
+    });
+
+    expect(chaiHttpResponse.body).to.haveOwnProperty("message");
   });
 });
