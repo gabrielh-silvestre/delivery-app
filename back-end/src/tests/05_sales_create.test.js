@@ -24,7 +24,7 @@ describe("Rota /sales", () => {
   let tokenStub;
 
   describe("Endpoint POST /", () => {
-    before(async () => {
+    before(() => {
       tokenStub = sinon.stub(auth, "verifyToken");
       saleModelStub = sinon.stub(Sale, "create");
       saleProductModelStub = sinon.stub(SaleProduct, "create");
