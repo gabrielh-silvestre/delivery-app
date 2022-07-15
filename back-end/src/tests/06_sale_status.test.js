@@ -16,320 +16,330 @@ const MOCK_UNAUTHORIZED_ERROR = Object.assign(new Error("Invalid token"), {
   statusCode: 401,
 });
 
-describe("Rota /sales", () => {
+describe("Rota PATCH /pending/:id", () => {
   let findSaleStub;
   let updateSaleStub;
   let tokenStub;
 
-  describe("Endpoint PATCH /pending/:id", () => {
-    before(() => {
-      tokenStub = sinon.stub(auth, "verifyToken");
-      findSaleStub = sinon.stub(Sale, "findOne");
-      updateSaleStub = sinon.stub(Sale, "update");
+  before(() => {
+    tokenStub = sinon.stub(auth, "verifyToken");
+    findSaleStub = sinon.stub(Sale, "findOne");
+    updateSaleStub = sinon.stub(Sale, "update");
 
-      tokenStub.onFirstCall().returns({ id: 2, role: "seller" });
-      tokenStub.onSecondCall().returns({ id: 3, role: "customer" });
-      tokenStub.onThirdCall().throws(MOCK_UNAUTHORIZED_ERROR);
-      tokenStub.returns({ id: 2, role: "seller" });
+    tokenStub.onFirstCall().returns({ id: 2, role: "seller" });
+    tokenStub.onSecondCall().returns({ id: 3, role: "customer" });
+    tokenStub.onThirdCall().throws(MOCK_UNAUTHORIZED_ERROR);
+    tokenStub.returns({ id: 2, role: "seller" });
 
-      findSaleStub.onFirstCall().resolves(true);
-      findSaleStub.onSecondCall().resolves(null);
-    });
-
-    after(() => {
-      auth.verifyToken.restore();
-      Sale.findOne.restore();
-      Sale.update.restore();
-    });
-
-    it("Deve atualizar a venda para pendente", async () => {
-      const response = await chai
-        .request(server)
-        .patch("/sales/pending/1")
-        .set("Authorization", "token123");
-
-      expect(response.status).to.be.equal(200);
-      expect(response.body).to.be.empty;
-    });
-
-    it("Não deve atualizar uma venda para o cliente", async () => {
-      const response = await chai
-        .request(server)
-        .patch("/sales/pending/1")
-        .set("Authorization", "token456");
-
-      expect(response.status).to.be.equal(401);
-      expect(response.body).to.be.empty;
-    });
-
-    it("Não deve atualizar uma venda sem token", async () => {
-      const response = await chai.request(server).patch("/sales/pending/1");
-
-      expect(response.status).to.be.equal(401);
-      expect(response.body).to.be.an("object");
-
-      expect(response.body).to.have.property("message");
-      expect(response.body.message).to.be.equal("Token not provided");
-    });
-
-    it("Não deve atualizar uma venda com token inválido", async () => {
-      const response = await chai
-        .request(server)
-        .patch("/sales/pending/1")
-        .set("Authorization", "token456");
-
-      expect(response.status).to.be.equal(401);
-      expect(response.body).to.be.an("object");
-
-      expect(response.body).to.have.property("message");
-      expect(response.body.message).to.be.equal("Invalid token");
-    });
-
-    it("Não deve atualizar uma venda inexistent", async () => {
-      const response = await chai
-        .request(server)
-        .patch("/sales/pending/2")
-        .set("Authorization", "token123");
-
-      expect(response.status).to.be.equal(404);
-      expect(response.body).to.be.an("object");
-
-      expect(response.body).to.have.property("message");
-      expect(response.body.message).to.be.equal("Sale not found");
-    });
+    findSaleStub.onFirstCall().resolves(true);
+    findSaleStub.onSecondCall().resolves(null);
   });
 
-  describe("Endpoint PATCH /preparing/:id", () => {
-    before(() => {
-      tokenStub = sinon.stub(auth, "verifyToken");
-      findSaleStub = sinon.stub(Sale, "findOne");
-      updateSaleStub = sinon.stub(Sale, "update");
-
-      tokenStub.onFirstCall().returns({ id: 2, role: "seller" });
-      tokenStub.onSecondCall().returns({ id: 3, role: "customer" });
-      tokenStub.onThirdCall().throws(MOCK_UNAUTHORIZED_ERROR);
-      tokenStub.returns({ id: 2, role: "seller" });
-
-      findSaleStub.onFirstCall().resolves(true);
-      findSaleStub.onSecondCall().resolves(null);
-    });
-
-    after(() => {
-      auth.verifyToken.restore();
-      Sale.findOne.restore();
-      Sale.update.restore();
-    });
-
-    it("Deve atualizar a venda para preparando", async () => {
-      const response = await chai
-        .request(server)
-        .patch("/sales/preparing/1")
-        .set("Authorization", "token123");
-
-      expect(response.status).to.be.equal(200);
-      expect(response.body).to.be.empty;
-    });
-
-    it("Não deve atualizar uma venda para o cliente", async () => {
-      const response = await chai
-        .request(server)
-        .patch("/sales/preparing/1")
-        .set("Authorization", "token456");
-
-      expect(response.status).to.be.equal(401);
-      expect(response.body).to.be.empty;
-    });
-
-    it("Não deve atualizar uma venda sem token", async () => {
-      const response = await chai.request(server).patch("/sales/preparing/1");
-
-      expect(response.status).to.be.equal(401);
-      expect(response.body).to.be.an("object");
-
-      expect(response.body).to.have.property("message");
-      expect(response.body.message).to.be.equal("Token not provided");
-    });
-
-    it("Não deve atualizar uma venda com token inválido", async () => {
-      const response = await chai
-        .request(server)
-        .patch("/sales/preparing/1")
-        .set("Authorization", "token456");
-
-      expect(response.status).to.be.equal(401);
-      expect(response.body).to.be.an("object");
-
-      expect(response.body).to.have.property("message");
-      expect(response.body.message).to.be.equal("Invalid token");
-    });
-
-    it("Não deve atualizar uma venda inexistent", async () => {
-      const response = await chai
-        .request(server)
-        .patch("/sales/preparing/2")
-        .set("Authorization", "token123");
-
-      expect(response.status).to.be.equal(404);
-      expect(response.body).to.be.an("object");
-
-      expect(response.body).to.have.property("message");
-      expect(response.body.message).to.be.equal("Sale not found");
-    });
+  after(() => {
+    auth.verifyToken.restore();
+    Sale.findOne.restore();
+    Sale.update.restore();
   });
 
-  describe("Endpoint PATCH /delivering/:id", () => {
-    before(() => {
-      tokenStub = sinon.stub(auth, "verifyToken");
-      findSaleStub = sinon.stub(Sale, "findOne");
-      updateSaleStub = sinon.stub(Sale, "update");
+  it("Deve atualizar a venda para pendente", async () => {
+    const response = await chai
+      .request(server)
+      .patch("/sales/pending/1")
+      .set("Authorization", "token123");
 
-      tokenStub.onFirstCall().returns({ id: 2, role: "seller" });
-      tokenStub.onSecondCall().returns({ id: 3, role: "customer" });
-      tokenStub.onThirdCall().throws(MOCK_UNAUTHORIZED_ERROR);
-      tokenStub.returns({ id: 2, role: "seller" });
-
-      findSaleStub.onFirstCall().resolves(true);
-      findSaleStub.onSecondCall().resolves(null);
-    });
-
-    after(() => {
-      auth.verifyToken.restore();
-      Sale.findOne.restore();
-      Sale.update.restore();
-    });
-
-    it("Deve atualizar a venda para em transito", async () => {
-      const response = await chai
-        .request(server)
-        .patch("/sales/delivering/1")
-        .set("Authorization", "token123");
-
-      expect(response.status).to.be.equal(200);
-      expect(response.body).to.be.empty;
-    });
-
-    it("Não deve atualizar uma venda para o cliente", async () => {
-      const response = await chai
-        .request(server)
-        .patch("/sales/delivering/1")
-        .set("Authorization", "token456");
-
-      expect(response.status).to.be.equal(401);
-      expect(response.body).to.be.empty;
-    });
-
-    it("Não deve atualizar uma venda sem token", async () => {
-      const response = await chai.request(server).patch("/sales/delivering/1");
-
-      expect(response.status).to.be.equal(401);
-      expect(response.body).to.be.an("object");
-
-      expect(response.body).to.have.property("message");
-      expect(response.body.message).to.be.equal("Token not provided");
-    });
-
-    it("Não deve atualizar uma venda com token inválido", async () => {
-      const response = await chai
-        .request(server)
-        .patch("/sales/delivering/1")
-        .set("Authorization", "token456");
-
-      expect(response.status).to.be.equal(401);
-      expect(response.body).to.be.an("object");
-
-      expect(response.body).to.have.property("message");
-      expect(response.body.message).to.be.equal("Invalid token");
-    });
-
-    it("Não deve atualizar uma venda inexistent", async () => {
-      const response = await chai
-        .request(server)
-        .patch("/sales/delivering/2")
-        .set("Authorization", "token123");
-
-      expect(response.status).to.be.equal(404);
-      expect(response.body).to.be.an("object");
-
-      expect(response.body).to.have.property("message");
-      expect(response.body.message).to.be.equal("Sale not found");
-    });
+    expect(response.status).to.be.equal(200);
+    expect(response.body).to.be.empty;
   });
 
-  describe("Endpoint PATCH /delivered/:id", () => {
-    before(() => {
-      tokenStub = sinon.stub(auth, "verifyToken");
-      findSaleStub = sinon.stub(Sale, "findOne");
-      updateSaleStub = sinon.stub(Sale, "update");
+  it("Não deve atualizar uma venda para o cliente", async () => {
+    const response = await chai
+      .request(server)
+      .patch("/sales/pending/1")
+      .set("Authorization", "token456");
 
-      tokenStub.onFirstCall().returns({ id: 3, role: "customer" });
-      tokenStub.onSecondCall().returns({ id: 2, role: "seller" });
-      tokenStub.onThirdCall().throws(MOCK_UNAUTHORIZED_ERROR);
-      tokenStub.returns({ id: 3, role: "customer" });
+    expect(response.status).to.be.equal(401);
+    expect(response.body).to.be.empty;
+  });
 
-      findSaleStub.onFirstCall().resolves(true);
-      findSaleStub.onSecondCall().resolves(null);
-    });
+  it("Não deve atualizar uma venda sem token", async () => {
+    const response = await chai.request(server).patch("/sales/pending/1");
 
-    after(() => {
-      auth.verifyToken.restore();
-      Sale.findOne.restore();
-      Sale.update.restore();
-    });
+    expect(response.status).to.be.equal(401);
+    expect(response.body).to.be.an("object");
 
-    it("Deve atualizar a venda para entregue", async () => {
-      const response = await chai
-        .request(server)
-        .patch("/sales/delivered/1")
-        .set("Authorization", "token123");
+    expect(response.body).to.have.property("message");
+    expect(response.body.message).to.be.equal("Token not provided");
+  });
 
-      expect(response.status).to.be.equal(200);
-      expect(response.body).to.be.empty;
-    });
+  it("Não deve atualizar uma venda com token inválido", async () => {
+    const response = await chai
+      .request(server)
+      .patch("/sales/pending/1")
+      .set("Authorization", "token456");
 
-    it("Não deve atualizar uma venda para o vendedor", async () => {
-      const response = await chai
-        .request(server)
-        .patch("/sales/delivered/1")
-        .set("Authorization", "token456");
+    expect(response.status).to.be.equal(401);
+    expect(response.body).to.be.an("object");
 
-      expect(response.status).to.be.equal(401);
-      expect(response.body).to.be.empty;
-    });
+    expect(response.body).to.have.property("message");
+    expect(response.body.message).to.be.equal("Invalid token");
+  });
 
-    it("Não deve atualizar uma venda sem token", async () => {
-      const response = await chai.request(server).patch("/sales/delivered/1");
+  it("Não deve atualizar uma venda inexistent", async () => {
+    const response = await chai
+      .request(server)
+      .patch("/sales/pending/2")
+      .set("Authorization", "token123");
 
-      expect(response.status).to.be.equal(401);
-      expect(response.body).to.be.an("object");
+    expect(response.status).to.be.equal(404);
+    expect(response.body).to.be.an("object");
 
-      expect(response.body).to.have.property("message");
-      expect(response.body.message).to.be.equal("Token not provided");
-    });
+    expect(response.body).to.have.property("message");
+    expect(response.body.message).to.be.equal("Sale not found");
+  });
+});
 
-    it("Não deve atualizar uma venda com token inválido", async () => {
-      const response = await chai
-        .request(server)
-        .patch("/sales/delivered/1")
-        .set("Authorization", "token456");
+describe("Rota PATCH /preparing/:id", () => {
+  let findSaleStub;
+  let updateSaleStub;
+  let tokenStub;
 
-      expect(response.status).to.be.equal(401);
-      expect(response.body).to.be.an("object");
+  before(() => {
+    tokenStub = sinon.stub(auth, "verifyToken");
+    findSaleStub = sinon.stub(Sale, "findOne");
+    updateSaleStub = sinon.stub(Sale, "update");
 
-      expect(response.body).to.have.property("message");
-      expect(response.body.message).to.be.equal("Invalid token");
-    });
+    tokenStub.onFirstCall().returns({ id: 2, role: "seller" });
+    tokenStub.onSecondCall().returns({ id: 3, role: "customer" });
+    tokenStub.onThirdCall().throws(MOCK_UNAUTHORIZED_ERROR);
+    tokenStub.returns({ id: 2, role: "seller" });
 
-    it("Não deve atualizar uma venda inexistent", async () => {
-      const response = await chai
-        .request(server)
-        .patch("/sales/delivered/2")
-        .set("Authorization", "token123");
+    findSaleStub.onFirstCall().resolves(true);
+    findSaleStub.onSecondCall().resolves(null);
+  });
 
-      expect(response.status).to.be.equal(404);
-      expect(response.body).to.be.an("object");
+  after(() => {
+    auth.verifyToken.restore();
+    Sale.findOne.restore();
+    Sale.update.restore();
+  });
 
-      expect(response.body).to.have.property("message");
-      expect(response.body.message).to.be.equal("Sale not found");
-    });
+  it("Deve atualizar a venda para preparando", async () => {
+    const response = await chai
+      .request(server)
+      .patch("/sales/preparing/1")
+      .set("Authorization", "token123");
+
+    expect(response.status).to.be.equal(200);
+    expect(response.body).to.be.empty;
+  });
+
+  it("Não deve atualizar uma venda para o cliente", async () => {
+    const response = await chai
+      .request(server)
+      .patch("/sales/preparing/1")
+      .set("Authorization", "token456");
+
+    expect(response.status).to.be.equal(401);
+    expect(response.body).to.be.empty;
+  });
+
+  it("Não deve atualizar uma venda sem token", async () => {
+    const response = await chai.request(server).patch("/sales/preparing/1");
+
+    expect(response.status).to.be.equal(401);
+    expect(response.body).to.be.an("object");
+
+    expect(response.body).to.have.property("message");
+    expect(response.body.message).to.be.equal("Token not provided");
+  });
+
+  it("Não deve atualizar uma venda com token inválido", async () => {
+    const response = await chai
+      .request(server)
+      .patch("/sales/preparing/1")
+      .set("Authorization", "token456");
+
+    expect(response.status).to.be.equal(401);
+    expect(response.body).to.be.an("object");
+
+    expect(response.body).to.have.property("message");
+    expect(response.body.message).to.be.equal("Invalid token");
+  });
+
+  it("Não deve atualizar uma venda inexistent", async () => {
+    const response = await chai
+      .request(server)
+      .patch("/sales/preparing/2")
+      .set("Authorization", "token123");
+
+    expect(response.status).to.be.equal(404);
+    expect(response.body).to.be.an("object");
+
+    expect(response.body).to.have.property("message");
+    expect(response.body.message).to.be.equal("Sale not found");
+  });
+});
+
+describe("Rota PATCH /delivering/:id", () => {
+  let findSaleStub;
+  let updateSaleStub;
+  let tokenStub;
+
+  before(() => {
+    tokenStub = sinon.stub(auth, "verifyToken");
+    findSaleStub = sinon.stub(Sale, "findOne");
+    updateSaleStub = sinon.stub(Sale, "update");
+
+    tokenStub.onFirstCall().returns({ id: 2, role: "seller" });
+    tokenStub.onSecondCall().returns({ id: 3, role: "customer" });
+    tokenStub.onThirdCall().throws(MOCK_UNAUTHORIZED_ERROR);
+    tokenStub.returns({ id: 2, role: "seller" });
+
+    findSaleStub.onFirstCall().resolves(true);
+    findSaleStub.onSecondCall().resolves(null);
+  });
+
+  after(() => {
+    auth.verifyToken.restore();
+    Sale.findOne.restore();
+    Sale.update.restore();
+  });
+
+  it("Deve atualizar a venda para em transito", async () => {
+    const response = await chai
+      .request(server)
+      .patch("/sales/delivering/1")
+      .set("Authorization", "token123");
+
+    expect(response.status).to.be.equal(200);
+    expect(response.body).to.be.empty;
+  });
+
+  it("Não deve atualizar uma venda para o cliente", async () => {
+    const response = await chai
+      .request(server)
+      .patch("/sales/delivering/1")
+      .set("Authorization", "token456");
+
+    expect(response.status).to.be.equal(401);
+    expect(response.body).to.be.empty;
+  });
+
+  it("Não deve atualizar uma venda sem token", async () => {
+    const response = await chai.request(server).patch("/sales/delivering/1");
+
+    expect(response.status).to.be.equal(401);
+    expect(response.body).to.be.an("object");
+
+    expect(response.body).to.have.property("message");
+    expect(response.body.message).to.be.equal("Token not provided");
+  });
+
+  it("Não deve atualizar uma venda com token inválido", async () => {
+    const response = await chai
+      .request(server)
+      .patch("/sales/delivering/1")
+      .set("Authorization", "token456");
+
+    expect(response.status).to.be.equal(401);
+    expect(response.body).to.be.an("object");
+
+    expect(response.body).to.have.property("message");
+    expect(response.body.message).to.be.equal("Invalid token");
+  });
+
+  it("Não deve atualizar uma venda inexistent", async () => {
+    const response = await chai
+      .request(server)
+      .patch("/sales/delivering/2")
+      .set("Authorization", "token123");
+
+    expect(response.status).to.be.equal(404);
+    expect(response.body).to.be.an("object");
+
+    expect(response.body).to.have.property("message");
+    expect(response.body.message).to.be.equal("Sale not found");
+  });
+});
+
+describe("Rota PATCH /delivered/:id", () => {
+  let findSaleStub;
+  let updateSaleStub;
+  let tokenStub;
+
+  before(() => {
+    tokenStub = sinon.stub(auth, "verifyToken");
+    findSaleStub = sinon.stub(Sale, "findOne");
+    updateSaleStub = sinon.stub(Sale, "update");
+
+    tokenStub.onFirstCall().returns({ id: 3, role: "customer" });
+    tokenStub.onSecondCall().returns({ id: 2, role: "seller" });
+    tokenStub.onThirdCall().throws(MOCK_UNAUTHORIZED_ERROR);
+    tokenStub.returns({ id: 3, role: "customer" });
+
+    findSaleStub.onFirstCall().resolves(true);
+    findSaleStub.onSecondCall().resolves(null);
+  });
+
+  after(() => {
+    auth.verifyToken.restore();
+    Sale.findOne.restore();
+    Sale.update.restore();
+  });
+
+  it("Deve atualizar a venda para entregue", async () => {
+    const response = await chai
+      .request(server)
+      .patch("/sales/delivered/1")
+      .set("Authorization", "token123");
+
+    expect(response.status).to.be.equal(200);
+    expect(response.body).to.be.empty;
+  });
+
+  it("Não deve atualizar uma venda para o vendedor", async () => {
+    const response = await chai
+      .request(server)
+      .patch("/sales/delivered/1")
+      .set("Authorization", "token456");
+
+    expect(response.status).to.be.equal(401);
+    expect(response.body).to.be.empty;
+  });
+
+  it("Não deve atualizar uma venda sem token", async () => {
+    const response = await chai.request(server).patch("/sales/delivered/1");
+
+    expect(response.status).to.be.equal(401);
+    expect(response.body).to.be.an("object");
+
+    expect(response.body).to.have.property("message");
+    expect(response.body.message).to.be.equal("Token not provided");
+  });
+
+  it("Não deve atualizar uma venda com token inválido", async () => {
+    const response = await chai
+      .request(server)
+      .patch("/sales/delivered/1")
+      .set("Authorization", "token456");
+
+    expect(response.status).to.be.equal(401);
+    expect(response.body).to.be.an("object");
+
+    expect(response.body).to.have.property("message");
+    expect(response.body.message).to.be.equal("Invalid token");
+  });
+
+  it("Não deve atualizar uma venda inexistent", async () => {
+    const response = await chai
+      .request(server)
+      .patch("/sales/delivered/2")
+      .set("Authorization", "token123");
+
+    expect(response.status).to.be.equal(404);
+    expect(response.body).to.be.an("object");
+
+    expect(response.body).to.have.property("message");
+    expect(response.body.message).to.be.equal("Sale not found");
   });
 });

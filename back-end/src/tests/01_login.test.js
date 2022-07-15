@@ -44,7 +44,6 @@ describe("Rota user/login", () => {
       email: "zebirita@email.com",
       password: "$#zebirita#$",
     });
-    console.log(chaiHttpResponse.body);
 
     expect(chaiHttpResponse.body).to.haveOwnProperty("name");
     expect(chaiHttpResponse.body).to.haveOwnProperty("email");

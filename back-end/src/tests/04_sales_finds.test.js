@@ -22,182 +22,183 @@ const MOCK_UNAUTHORIZED_ERROR = Object.assign(new Error("Invalid token"), {
   statusCode: 401,
 });
 
-describe("Rota /sales", () => {
+describe("Rota GET /sales", () => {
   let saleModelStub;
   let tokenStub;
 
-  describe("Endpoint GET /", () => {
-    before(async () => {
-      tokenStub = sinon.stub(auth, "verifyToken");
-      saleModelStub = sinon.stub(Sale, "findAll");
+  before(async () => {
+    tokenStub = sinon.stub(auth, "verifyToken");
+    saleModelStub = sinon.stub(Sale, "findAll");
 
-      tokenStub.onFirstCall().returns({ id: 3, role: "customer" });
-      tokenStub.onSecondCall().returns({ id: 2, role: "seller" });
-      tokenStub.onThirdCall().throws(MOCK_UNAUTHORIZED_ERROR);
+    tokenStub.onFirstCall().returns({ id: 3, role: "customer" });
+    tokenStub.onSecondCall().returns({ id: 2, role: "seller" });
+    tokenStub.onThirdCall().throws(MOCK_UNAUTHORIZED_ERROR);
 
-      saleModelStub.onFirstCall().resolves(returnAllByCustomer);
-      saleModelStub.onSecondCall().resolves(returnAllBySeller);
-    });
-
-    after(() => {
-      Sale.findAll.restore();
-      auth.verifyToken.restore();
-    });
-
-    it("Deve retornar todas as vendas para o cliente", async () => {
-      const response = await chai
-        .request(server)
-        .get("/sales")
-        .set("Authorization", "token123");
-
-      expect(response.status).to.be.equal(200);
-
-      expect(response.body).to.be.an("array");
-      expect(response.body[0]).to.be.an("object");
-
-      expect(response.body[0]).to.have.property("id");
-      expect(response.body[0]).to.have.property("totalPrice");
-      expect(response.body[0]).to.have.property("saleDate");
-      expect(response.body[0]).to.have.property("status");
-
-      expect(response.body[0]).to.not.have.property("address");
-    });
-
-    it("Deve retornar todas as vendas para o vendedor", async () => {
-      const response = await chai
-        .request(server)
-        .get("/sales")
-        .set("Authorization", "token123");
-
-      expect(response.status).to.be.equal(200);
-
-      expect(response.body).to.be.an("array");
-      expect(response.body[0]).to.be.an("object");
-
-      expect(response.body[0]).to.have.property("id");
-      expect(response.body[0]).to.have.property("totalPrice");
-      expect(response.body[0]).to.have.property("saleDate");
-      expect(response.body[0]).to.have.property("status");
-      expect(response.body[0]).to.have.property("address");
-    });
-
-    it("Não deve retornar as vendas para um usuário sem token", async () => {
-      const response = await chai.request(server).get("/sales");
-
-      expect(response.status).to.be.equal(401);
-      expect(response.body).to.be.an("object");
-
-      expect(response.body).to.have.property("message");
-      expect(response.body.message).to.be.equal("Token not provided");
-    });
-
-    it("Não deve retornar as vendas para um usuário com token inválido", async () => {
-      const response = await chai
-        .request(server)
-        .get("/sales")
-        .set("Authorization", "token");
-
-      expect(response.status).to.be.equal(401);
-      expect(response.body).to.be.an("object");
-
-      expect(response.body).to.have.property("message");
-      expect(response.body.message).to.be.equal("Invalid token");
-    });
+    saleModelStub.onFirstCall().resolves(returnAllByCustomer);
+    saleModelStub.onSecondCall().resolves(returnAllBySeller);
   });
 
-  describe("Endpoint GET /:id", () => {
-    before(() => {
-      saleModelStub = sinon.stub(Sale, "findOne");
-      tokenStub = sinon.stub(auth, "verifyToken");
+  after(() => {
+    Sale.findAll.restore();
+    auth.verifyToken.restore();
+  });
 
-      tokenStub.onFirstCall().returns({ id: 3, role: "customer" });
-      tokenStub.onSecondCall().returns({ id: 2, role: "seller" });
-      tokenStub.onThirdCall().throws(MOCK_UNAUTHORIZED_ERROR);
+  it("Deve retornar todas as vendas para o cliente", async () => {
+    const response = await chai
+      .request(server)
+      .get("/sales")
+      .set("Authorization", "token123");
 
-      saleModelStub.onFirstCall().resolves(returnDetailedSale);
-      saleModelStub.onSecondCall().resolves(returnDetailedSale);
-    });
+    expect(response.status).to.be.equal(200);
 
-    after(() => {
-      Sale.findOne.restore();
-      auth.verifyToken.restore();
-    });
+    expect(response.body).to.be.an("array");
+    expect(response.body[0]).to.be.an("object");
 
-    it("Deve retornar os detalhes de uma venda para o cliente", async () => {
-      const response = await chai
-        .request(server)
-        .get("/sales/1")
-        .set("Authorization", "token123");
+    expect(response.body[0]).to.have.property("id");
+    expect(response.body[0]).to.have.property("totalPrice");
+    expect(response.body[0]).to.have.property("saleDate");
+    expect(response.body[0]).to.have.property("status");
 
-      expect(response.status).to.be.equal(200);
+    expect(response.body[0]).to.not.have.property("address");
+  });
 
-      expect(response.body).to.be.an("object");
+  it("Deve retornar todas as vendas para o vendedor", async () => {
+    const response = await chai
+      .request(server)
+      .get("/sales")
+      .set("Authorization", "token123");
 
-      expect(response.body).to.have.property("id");
-      expect(response.body).to.have.property("totalPrice");
-      expect(response.body).to.have.property("saleDate");
-      expect(response.body).to.have.property("status");
+    expect(response.status).to.be.equal(200);
 
-      expect(response.body).to.have.property("seller");
-      expect(response.body.seller).to.have.property("id");
-      expect(response.body.seller).to.have.property("name");
+    expect(response.body).to.be.an("array");
+    expect(response.body[0]).to.be.an("object");
 
-      expect(response.body).to.have.property("products");
-      expect(response.body.products).to.be.an("array");
-      expect(response.body.products[0]).to.have.property("id");
-      expect(response.body.products[0]).to.have.property("name");
-      expect(response.body.products[0]).to.have.property("price");
-      expect(response.body.products[0]).to.have.property("quantity");
-    });
+    expect(response.body[0]).to.have.property("id");
+    expect(response.body[0]).to.have.property("totalPrice");
+    expect(response.body[0]).to.have.property("saleDate");
+    expect(response.body[0]).to.have.property("status");
+    expect(response.body[0]).to.have.property("address");
+  });
 
-    it("Deve retornar os detalhes de uma venda para o vendedor", async () => {
-      const response = await chai
-        .request(server)
-        .get("/sales/1")
-        .set("Authorization", "token123");
+  it("Não deve retornar as vendas para um usuário sem token", async () => {
+    const response = await chai.request(server).get("/sales");
 
-      expect(response.status).to.be.equal(200);
+    expect(response.status).to.be.equal(401);
+    expect(response.body).to.be.an("object");
 
-      expect(response.body).to.be.an("object");
+    expect(response.body).to.have.property("message");
+    expect(response.body.message).to.be.equal("Token not provided");
+  });
 
-      expect(response.body).to.have.property("id");
-      expect(response.body).to.have.property("totalPrice");
-      expect(response.body).to.have.property("saleDate");
-      expect(response.body).to.have.property("status");
+  it("Não deve retornar as vendas para um usuário com token inválido", async () => {
+    const response = await chai
+      .request(server)
+      .get("/sales")
+      .set("Authorization", "token");
 
-      expect(response.body).to.have.property("seller");
-      expect(response.body.seller).to.have.property("id");
-      expect(response.body.seller).to.have.property("name");
+    expect(response.status).to.be.equal(401);
+    expect(response.body).to.be.an("object");
 
-      expect(response.body).to.have.property("products");
-      expect(response.body.products).to.be.an("array");
-      expect(response.body.products[0]).to.have.property("id");
-      expect(response.body.products[0]).to.have.property("name");
-      expect(response.body.products[0]).to.have.property("price");
-      expect(response.body.products[0]).to.have.property("quantity");
-    });
+    expect(response.body).to.have.property("message");
+    expect(response.body.message).to.be.equal("Invalid token");
+  });
+});
 
-    it("Não deve retornar as vendas para um usuário sem token", async () => {
-      const response = await chai.request(server).get("/sales");
+describe("Endpoint GET /sales/:id", () => {
+  let saleModelStub;
+  let tokenStub;
 
-      expect(response.status).to.be.equal(401);
-      expect(response.body).to.be.an("object");
+  before(() => {
+    saleModelStub = sinon.stub(Sale, "findOne");
+    tokenStub = sinon.stub(auth, "verifyToken");
 
-      expect(response.body).to.have.property("message");
-      expect(response.body.message).to.be.equal("Token not provided");
-    });
+    tokenStub.onFirstCall().returns({ id: 3, role: "customer" });
+    tokenStub.onSecondCall().returns({ id: 2, role: "seller" });
+    tokenStub.onThirdCall().throws(MOCK_UNAUTHORIZED_ERROR);
 
-    it("Não deve retornar as vendas para um usuário com token inválido", async () => {
-      const response = await chai
-        .request(server)
-        .get("/sales")
-        .set("Authorization", "token");
+    saleModelStub.onFirstCall().resolves(returnDetailedSale);
+    saleModelStub.onSecondCall().resolves(returnDetailedSale);
+  });
 
-      expect(response.status).to.be.equal(401);
-      expect(response.body).to.be.an("object");
+  after(() => {
+    Sale.findOne.restore();
+    auth.verifyToken.restore();
+  });
 
-      expect(response.body).to.have.property("message");
-      expect(response.body.message).to.be.equal("Invalid token");
-    });
+  it("Deve retornar os detalhes de uma venda para o cliente", async () => {
+    const response = await chai
+      .request(server)
+      .get("/sales/1")
+      .set("Authorization", "token123");
+
+    expect(response.status).to.be.equal(200);
+
+    expect(response.body).to.be.an("object");
+
+    expect(response.body).to.have.property("id");
+    expect(response.body).to.have.property("totalPrice");
+    expect(response.body).to.have.property("saleDate");
+    expect(response.body).to.have.property("status");
+
+    expect(response.body).to.have.property("seller");
+    expect(response.body.seller).to.have.property("id");
+    expect(response.body.seller).to.have.property("name");
+
+    expect(response.body).to.have.property("products");
+    expect(response.body.products).to.be.an("array");
+    expect(response.body.products[0]).to.have.property("id");
+    expect(response.body.products[0]).to.have.property("name");
+    expect(response.body.products[0]).to.have.property("price");
+    expect(response.body.products[0]).to.have.property("quantity");
+  });
+
+  it("Deve retornar os detalhes de uma venda para o vendedor", async () => {
+    const response = await chai
+      .request(server)
+      .get("/sales/1")
+      .set("Authorization", "token123");
+
+    expect(response.status).to.be.equal(200);
+
+    expect(response.body).to.be.an("object");
+
+    expect(response.body).to.have.property("id");
+    expect(response.body).to.have.property("totalPrice");
+    expect(response.body).to.have.property("saleDate");
+    expect(response.body).to.have.property("status");
+
+    expect(response.body).to.have.property("seller");
+    expect(response.body.seller).to.have.property("id");
+    expect(response.body.seller).to.have.property("name");
+
+    expect(response.body).to.have.property("products");
+    expect(response.body.products).to.be.an("array");
+    expect(response.body.products[0]).to.have.property("id");
+    expect(response.body.products[0]).to.have.property("name");
+    expect(response.body.products[0]).to.have.property("price");
+    expect(response.body.products[0]).to.have.property("quantity");
+  });
+
+  it("Não deve retornar as vendas para um usuário sem token", async () => {
+    const response = await chai.request(server).get("/sales");
+
+    expect(response.status).to.be.equal(401);
+    expect(response.body).to.be.an("object");
+
+    expect(response.body).to.have.property("message");
+    expect(response.body.message).to.be.equal("Token not provided");
+  });
+
+  it("Não deve retornar as vendas para um usuário com token inválido", async () => {
+    const response = await chai
+      .request(server)
+      .get("/sales")
+      .set("Authorization", "token");
+
+    expect(response.status).to.be.equal(401);
+    expect(response.body).to.be.an("object");
+
+    expect(response.body).to.have.property("message");
+    expect(response.body.message).to.be.equal("Invalid token");
   });
 });

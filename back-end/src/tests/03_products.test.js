@@ -10,7 +10,7 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 
-describe("Rota /products", () => {
+describe("Rota GET /products", () => {
   before(() => {
     sinon.stub(Product, "findAll").resolves([
       {
