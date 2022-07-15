@@ -10,12 +10,24 @@ function ProductCard({ cardProduct }) {
   const [productQty, setProductQty] = useState(0);
 
   useEffect(() => {
+    const savedProducts = JSON.parse(localStorage.getItem('products'));
+    if (!savedProducts || savedProducts.length === 0) return null;
+
+    setProducts(savedProducts);
+  }, [setProducts]);
+
+  useEffect(() => {
     if (productQty <= 0) setActiveButton(false);
     else setActiveButton(true);
-  }, [productQty]);
+
+    localStorage.setItem('products', JSON.stringify(products));
+  }, [productQty, products]);
 
   useEffect(() => {
     const product = products.find((item) => item.id === id);
+    // JSON.parse(localStorage.getItem('products'));
+
+    console.log(product);
     if (!product) return null;
 
     setProductQty(product.quantity);
