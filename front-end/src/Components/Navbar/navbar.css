@@ -94,10 +94,13 @@ a:hover {
   }
 
   .nav-list-off {
+    display: none;
     transform: translateX(100%);
   }
 
   .nav-list-active {
+    display: flex;
     transform: translateX(0);
+    z-index: 1;
   }
 }
