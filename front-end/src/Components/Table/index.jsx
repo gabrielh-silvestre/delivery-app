@@ -42,18 +42,14 @@ function Table({ products }) {
               data-label="Valor Unitário"
               data-testid={ `customer_checkout__element-order-table-unit-price-${index}` }
             >
-              {current.price.toLocaleString('pt-br', {
-                style: 'currency',
-                currency: 'BRL',
-              })}
+              {current.price.toLocaleString('pt-br', { minimumFractionDigits: 2 })}
             </td>
             <td
               data-label="Item"
               data-testid={ `customer_checkout__element-order-table-sub-total-${index}` }
             >
               {(current.price * current.quantity).toLocaleString('pt-br', {
-                style: 'currency',
-                currency: 'BRL',
+                minimumFractionDigits: 2,
               })}
             </td>
             <td

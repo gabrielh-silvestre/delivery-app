@@ -43,7 +43,7 @@
   .table td:before {
     content: attr(data-label);
     font-size: 15px;
-    font-weight: 200;
+    font-weight: 600;
     left: 0;
     padding-left: 15px;
     position: absolute;
@@ -52,6 +52,6 @@
   }
 
   .table-remove {
-    font-weight: 200;
+    font-weight: 600;
   }
 }

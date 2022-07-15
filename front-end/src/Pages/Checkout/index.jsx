@@ -62,15 +62,13 @@ function Checkout() {
               className="chackout-amount"
               data-testid="customer_checkout__element-order-total-price"
             >
-              {`Valor total: ${products
+              Valor total:
+              {` ${products
                 .reduce(
-                  (previous, current) => previous + current.preco * current.quantidade,
+                  (previous, current) => previous + current.price * current.quantity,
                   0,
                 )
-                .toLocaleString('pt-br', {
-                  style: 'currency',
-                  currency: 'BRL',
-                })}`}
+                .toLocaleString('pt-br', { minimumFractionDigits: 2 })}`}
             </h3>
           </div>
         </div>
