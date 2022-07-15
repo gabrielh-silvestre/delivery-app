@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './table.css';
 
 // tabela responsiva baseada no vídeo: https://youtu.be/ZtopjfXhUZI
