@@ -23,31 +23,37 @@ function Checkout() {
 
   const products = [
     {
+      id: 1,
       name: 'Produtos',
       price: 100.92,
       quantity: 5,
     },
     {
+      id: 2,
       name: 'Produtos',
       price: 100.92,
       quantity: 5,
     },
     {
+      id: 3,
       name: 'Produtos',
       price: 100.92,
       quantity: 5,
     },
     {
+      id: 4,
       name: 'Produtos',
       price: 100.92,
       quantity: 5,
     },
     {
+      id: 5,
       name: 'Produtos',
       price: 100.92,
       quantity: 5,
     },
     {
+      id: 6,
       name: 'Produtos',
       price: 10.92,
       quantity: 5,

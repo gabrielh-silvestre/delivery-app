@@ -5,7 +5,12 @@ import './table.css';
 // tabela responsiva baseada no vídeo: https://youtu.be/ZtopjfXhUZI
 
 function Table() {
-  const { card } = useContext(context);
+  const { card, setCard } = useContext(context);
+
+  const removeProduct = (id) => {
+    const updated = card.filter((current) => current.id !== id);
+    setCard(updated);
+  };
 
   return (
     <table className="table">
@@ -44,7 +49,9 @@ function Table() {
               data-label="Valor Unitário"
               data-testid={ `customer_checkout__element-order-table-unit-price-${index}` }
             >
-              {current.price.toLocaleString('pt-br', { minimumFractionDigits: 2 })}
+              {current.price.toLocaleString('pt-br', {
+                minimumFractionDigits: 2,
+              })}
             </td>
             <td
               data-label="Item"
@@ -54,11 +61,15 @@ function Table() {
                 minimumFractionDigits: 2,
               })}
             </td>
-            <td
-              className="table-remove"
-              data-testid={ `customer_checkout__element-order-table-remove-${index}` }
-            >
-              Remover
+            <td>
+              <button
+                className="table-remove"
+                type="button"
+                onClick={ () => removeProduct(current.id) }
+                data-testid={ `customer_checkout__element-order-table-remove-${index}` }
+              >
+                Remover
+              </button>
             </td>
           </tr>
         ))}
