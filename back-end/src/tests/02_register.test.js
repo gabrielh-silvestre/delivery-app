@@ -6,6 +6,8 @@ const server = require("../api/app");
 
 const { User } = require("../database/models"); // importar USER
 
+const { users } = require("./mocks");
+
 chai.use(chaiHttp);
 
 const { expect } = chai;
@@ -82,10 +84,12 @@ describe("Rota /register - CASOS DE SUCESSO", () => {
 
   before(() => {
     sinon.stub(User, "findOne").resolves();
+    sinon.stub(User, "create").resolves(users[2]);
   });
 
   after(() => {
     User.findOne.restore();
+    User.create.restore();
   });
 
   it("Essa requisição deve ser bem sucedida caso o email não exista", async () => {
