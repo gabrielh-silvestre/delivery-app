@@ -1,4 +1,9 @@
-const { Sale, Product, User } = require('../../../database/models');
+const {
+  Sale,
+  Product,
+  SaleProduct,
+  User,
+} = require('../../../database/models');
 
 const {
   sellerSaleReturnNormalizer,
@@ -64,9 +69,77 @@ const findByIdBySeller = async (sellerId, saleId) => {
   return sale ? detailedSaleFormatter(sale) : null;
 };
 
+const findByIdByPending = async (id) => {
+  const sale = await Sale.findOne({ where: { id } });
+
+  if (!sale) return null;
+
+  await Sale.update({ status: 'PENDENTE' }, { where: { id } });
+  return true;
+};
+
+const findByIdByPreparing = async (id) => {
+  const sale = await Sale.findOne({ where: { id } });
+
+  if (!sale) return null;
+
+  await Sale.update({ status: 'PREPARANDO' }, { where: { id } });
+  return true;
+};
+
+const findByIdByDelivering = async (id) => {
+  const sale = await Sale.findOne({ where: { id } });
+
+  if (!sale) return null;
+
+  await Sale.update({ status: 'EM TRANSITO' }, { where: { id } });
+  return true;
+};
+
+const findByIdByDelivered = async (id) => {
+  const sale = await Sale.findOne({ where: { id } });
+
+  if (!sale) return null;
+
+  await Sale.update({ status: 'ENTREGUE' }, { where: { id } });
+  return true;
+};
+
+const createNewSale = async ({
+  userId,
+  sellerId,
+  totalPrice,
+  deliveryAddress,
+  deliveryNumber,
+}) => {
+  const newSale = await Sale.create({
+    userId,
+    sellerId,
+    totalPrice,
+    deliveryAddress,
+    deliveryNumber,
+    status: 'PENDENTE',
+  });
+  return newSale;
+};
+
+const addProductToSale = async ({ saleId, productId, quantity }) => {
+  await SaleProduct.create({
+    saleId,
+    productId,
+    quantity,
+  });
+};
+
 module.exports = {
   findAllByCostumer,
   findAllBySeller,
   findByIdByCostumer,
   findByIdBySeller,
+  findByIdByPending,
+  findByIdByPreparing,
+  findByIdByDelivering,
+  findByIdByDelivered,
+  createNewSale,
+  addProductToSale,
 };
