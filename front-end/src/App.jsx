@@ -6,6 +6,7 @@ import ProductProvider from './Context/ProductProvider';
 import Login from './Pages/Login';
 import Products from './Pages/Products';
 import Register from './Pages/Register';
+import OrderDetail from './Pages/OrderDetail';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <ProductProvider>
           <Route exact path="/customer/products" component={ Products } />
           <Route exact path="/customer/checkout" component={ Checkout } />
+          <Route exact path="/customer/orders/:id" component={ OrderDetail } />
         </ProductProvider>
         <Route exact path="/">
           <Redirect exact from="/" to="/login" />
