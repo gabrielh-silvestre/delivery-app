@@ -20,8 +20,8 @@
 }
 
 .table-remove {
-  border: none;
   background: none;
+  border: none;
   cursor: pointer;
   font-size: 1rem;
 }
