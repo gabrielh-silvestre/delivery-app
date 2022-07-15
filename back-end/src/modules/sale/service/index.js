@@ -2,7 +2,6 @@ const { UnauthorizedError, NotFoundError } = require('restify-errors');
 
 const SaleModel = require('../model');
 
-
 const saleNotFound = 'Sale not found';
 const NOT_AUTHORIZED = 'You are not authorized to access this resource';
 

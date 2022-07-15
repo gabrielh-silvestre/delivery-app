@@ -103,6 +103,7 @@ const findByIdByDelivered = async (id) => {
 
   await Sale.update({ status: 'ENTREGUE' }, { where: { id } });
   return true;
+};
 
 const createNewSale = async ({
   userId,

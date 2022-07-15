@@ -51,6 +51,7 @@ const updateDelivered = async (req, res) => {
   const { statusCode, payload } = await SaleService.updateDelivered(id, role);
 
   return res.status(statusCode).json(payload);
+};
 
 const create = async (req, res) => {
   const { id, role } = req.user;
