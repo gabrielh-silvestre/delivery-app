@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import productContext from '../../Context/ProductsContext';
+import context from '../../Context/Context';
 
 function ProductCard({ cardProduct }) {
   const { id, name, url_image: image, price } = cardProduct;
 
-  const { products, setProducts } = useContext(productContext);
+  const { products, setProducts } = useContext(context);
   const [activeButton, setActiveButton] = useState(false);
   const [productQty, setProductQty] = useState(0);
 
