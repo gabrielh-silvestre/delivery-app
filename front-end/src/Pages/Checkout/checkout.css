@@ -1,0 +1,24 @@
+.checkout-main-content {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+.checkout-order-list {
+  overflow-x: hidden;
+  width: 80%;
+}
+
+.checkout-title {
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.chackout-amount {
+  margin-top: 15px;
+  text-align: right;
+}
