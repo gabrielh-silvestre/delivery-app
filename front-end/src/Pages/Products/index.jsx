@@ -1,8 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import NavBar from '../../Components/Navbar';
+import getProducts from '../../API/GetProducts';
+import ProductCard from '../../Components/Products/ProductCard';
 
 function Products() {
+  const [products, setProducts] = useState([]);
+
   const history = useHistory();
   const linksProducts = [
     {
@@ -18,6 +22,12 @@ function Products() {
   ];
 
   useEffect(() => {
+    const componentDidMount = async () => {
+      const allProducts = await getProducts();
+      allProducts.forEach((item) => { item.quantity = 0; });
+      setProducts(allProducts);
+    };
+
     const user = JSON.parse(localStorage.getItem('user'));
     const minimumCharactersForToken = 50;
 
@@ -25,11 +35,21 @@ function Products() {
       localStorage.removeItem('user');
       history.push('/login');
     }
-  });
+
+    componentDidMount();
+  }, [history]);
 
   return (
     <div>
       <NavBar links={ linksProducts } />
+
+      <main>
+        {
+          products.map((product) => (
+            <ProductCard key={ product.id } cardProduct={ product } />
+          ))
+        }
+      </main>
     </div>
   );
 }

@@ -1,7 +1,11 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import Provider from './Context/Provider';
+<<<<<<< HEAD
 import Checkout from './Pages/Checkout';
+=======
+import ProductProvider from './Context/ProductProvider';
+>>>>>>> dfb52fbdf2fc9d72bd1d781fcdb2e1b0de876380
 import Login from './Pages/Login';
 import Products from './Pages/Products';
 import Register from './Pages/Register';
@@ -12,8 +16,14 @@ function App() {
       <Provider>
         <Route exact path="/login" component={ Login } />
         <Route exact path="/register" component={ Register } />
+<<<<<<< HEAD
         <Route exact path="/customer/products" component={ Products } />
         <Route exact path="/customer/checkout" component={ Checkout } />
+=======
+        <ProductProvider>
+          <Route exact path="/customer/products" component={ Products } />
+        </ProductProvider>
+>>>>>>> dfb52fbdf2fc9d72bd1d781fcdb2e1b0de876380
         <Route exact path="/">
           <Redirect exact from="/" to="/login" />
         </Route>
