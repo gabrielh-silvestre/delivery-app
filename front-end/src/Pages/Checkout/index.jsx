@@ -17,24 +17,6 @@ function Checkout() {
     },
   ];
 
-  // const seller = [
-  //   {
-  //     name: 'Andre',
-  //   },
-  //   {
-  //     name: 'Mariana',
-  //   },
-  //   {
-  //     name: 'Mariana',
-  //   },
-  //   {
-  //     name: 'Mariana',
-  //   },
-  //   {
-  //     name: 'Mariana',
-  //   },
-  // ];
-
   const products = [
     {
       name: 'Produtos',

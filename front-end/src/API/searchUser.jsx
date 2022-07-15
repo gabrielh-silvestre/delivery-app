@@ -1,25 +1,20 @@
-// import axios from 'axios';
-// import API_URL from './API_URL';
+import axios from 'axios';
+import API_URL from './API_URL';
 
-//  const searchUser = async (authorization, idTask, task, status) => {
-//   var config = {
-//     method: 'patch',
-//     url: `${API_URL}task`,
-//     headers: {
-//       authorization,
-//     },
-//     data: {
-//       idTask,
-//       task,
-//       status,
-//     },
-//   };
+const searchUser = async (authorization, user) => {
+  const config = {
+    method: 'get',
+    url: `${API_URL}/user${user && `?r=${user}`}`,
+    headers: {
+      authorization,
+    },
+  };
 
-//   const response = await axios(config)
-//     .then((response) => response.data)
-//     .catch((error) => error);
+  const response = await axios(config)
+    .then((Response) => Response.data)
+    .catch((error) => error);
 
-//   return response;
-// };
+  return response;
+};
 
-// export default searchUser;
+export default searchUser;
