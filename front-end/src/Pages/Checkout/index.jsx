@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import searchUser from '../../API/searchUser';
 import NavBar from '../../Components/Navbar';
 import Table from '../../Components/Table';
+import { fetchInformationFromLocalstorage } from '../../Service/LocalSotorage';
 import './checkout.css';
 
 function Checkout() {
@@ -50,6 +52,24 @@ function Checkout() {
     },
   ];
 
+  const [sellers, setSellers] = useState('');
+
+  useEffect(() => {
+    const user = fetchInformationFromLocalstorage('user');
+
+    const fetchData = async () => {
+      const data = await await searchUser(user.token);
+      setSellers(data);
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    console.log('olá');
+    console.log(sellers);
+  }, [sellers]);
+
   return (
     <>
       <NavBar links={ linksProducts } />
@@ -70,6 +90,14 @@ function Checkout() {
                 )
                 .toLocaleString('pt-br', { minimumFractionDigits: 2 })}`}
             </h3>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h1 className="checkout-title">Detalhes para entrega</h1>
+        <div className="checkout-main-content">
+          <div className="checkout-order-list">
+            <Table products={ products } />
           </div>
         </div>
       </div>

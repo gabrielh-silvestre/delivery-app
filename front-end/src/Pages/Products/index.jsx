@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import NavBar from '../../Components/Navbar';
 import getProducts from '../../API/GetProducts';
 import ProductCard from '../../Components/Products/ProductCard';
+import { fetchInformationFromLocalstorage } from '../../Service/LocalSotorage';
 
 function Products() {
   const [products, setProducts] = useState([]);
@@ -28,7 +29,7 @@ function Products() {
       setProducts(allProducts);
     };
 
-    const user = JSON.parse(localStorage.getItem('user'));
+    const user = fetchInformationFromLocalstorage('user');
     const minimumCharactersForToken = 50;
 
     if (!user || user.token.length < minimumCharactersForToken) {
