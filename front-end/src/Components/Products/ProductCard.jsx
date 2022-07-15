@@ -61,7 +61,7 @@ function ProductCard({ cardProduct }) {
     <div className="productCard">
 
       <span data-testid={ `customer_products__element-card-price--${id}` }>
-        { price.replace('.', ',') }
+        { `R$ ${price.replace('.', ',')}` }
       </span>
 
       <img
