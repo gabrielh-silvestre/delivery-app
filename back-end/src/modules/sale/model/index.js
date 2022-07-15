@@ -69,6 +69,42 @@ const findByIdBySeller = async (sellerId, saleId) => {
   return sale ? detailedSaleFormatter(sale) : null;
 };
 
+const findByIdByPending = async (id) => {
+  const sale = await Sale.findOne({ where: { id } });
+
+  if (!sale) return null;
+
+  await Sale.update({ status: 'PENDENTE' }, { where: { id } });
+  return true;
+};
+
+const findByIdByPreparing = async (id) => {
+  const sale = await Sale.findOne({ where: { id } });
+
+  if (!sale) return null;
+
+  await Sale.update({ status: 'PREPARANDO' }, { where: { id } });
+  return true;
+};
+
+const findByIdByDelivering = async (id) => {
+  const sale = await Sale.findOne({ where: { id } });
+
+  if (!sale) return null;
+
+  await Sale.update({ status: 'EM TRANSITO' }, { where: { id } });
+  return true;
+};
+
+const findByIdByDelivered = async (id) => {
+  const sale = await Sale.findOne({ where: { id } });
+
+  if (!sale) return null;
+
+  await Sale.update({ status: 'ENTREGUE' }, { where: { id } });
+  return true;
+};
+
 const createNewSale = async ({
   userId,
   sellerId,
@@ -84,7 +120,6 @@ const createNewSale = async ({
     deliveryNumber,
     status: 'PENDENTE',
   });
-
   return newSale;
 };
 
@@ -101,6 +136,10 @@ module.exports = {
   findAllBySeller,
   findByIdByCostumer,
   findByIdBySeller,
+  findByIdByPending,
+  findByIdByPreparing,
+  findByIdByDelivering,
+  findByIdByDelivered,
   createNewSale,
   addProductToSale,
 };
