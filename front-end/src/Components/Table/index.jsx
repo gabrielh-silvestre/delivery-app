@@ -1,10 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
+import context from '../../Context/Context';
 import './table.css';
 
 // tabela responsiva baseada no vídeo: https://youtu.be/ZtopjfXhUZI
 
-function Table({ products }) {
+function Table() {
+  const { card } = useContext(context);
+
   return (
     <table className="table">
       <thead>
@@ -16,7 +18,7 @@ function Table({ products }) {
         <th>Romover Item</th>
       </thead>
       <tbody>
-        {products.map((current, index) => (
+        {card.map((current, index) => (
           <tr key={ index }>
             <td
               data-label="Item"
@@ -64,15 +66,5 @@ function Table({ products }) {
     </table>
   );
 }
-
-Table.propTypes = {
-  products: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      quantity: PropTypes.number.isRequired,
-    }),
-  ).isRequired,
-};
 
 export default Table;
