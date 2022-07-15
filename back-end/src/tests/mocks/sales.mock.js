@@ -75,8 +75,36 @@ const returnAllBySeller = [
   },
 ];
 
+const returnDetailedSale = {
+  dataValues: {
+    id: 1,
+    totalPrice: "100.00",
+    saleDate: "2022-07-15T17:52:58.000Z",
+    status: "PEDENTE",
+    seller: {
+      id: 2,
+      name: "Fulana Pereira",
+    },
+    products: [
+      {
+        id: 1,
+        name: "Skol Lata 250ml",
+        price: "2.20",
+        saleProduct: { quantity: 10 },
+      },
+      {
+        id: 2,
+        name: "Heineken 600ml",
+        price: "7.50",
+        saleProduct: { quantity: 10 },
+      },
+    ],
+  },
+};
+
 module.exports = {
   newSale,
   returnAllByCustomer,
   returnAllBySeller,
+  returnDetailedSale,
 };
