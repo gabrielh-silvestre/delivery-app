@@ -35,7 +35,7 @@ function Checkout() {
     };
 
     fetchData();
-  }, []);
+  }, [setCard, setSellerList]);
 
   return (
     <>

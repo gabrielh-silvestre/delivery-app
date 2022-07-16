@@ -32,7 +32,7 @@ function Cart({ cartState }) {
       <button
         data-testid="customer_products__button-cart"
         type="button"
-        disabled={ (totalPrice === '0') }
+        disabled={ (totalPrice === '0' || totalPrice === '0,00') }
         onClick={ () => history.push('/customer/checkout') }
       >
         { `Ver Carrinho: R$ ${totalPrice}` }
