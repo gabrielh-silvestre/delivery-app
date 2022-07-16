@@ -48,6 +48,12 @@ function ProductCard({ cardProduct, cartState }) {
     setProducts((prevProducts) => {
       const product = prevProducts.find((item) => item.id === id);
       product.quantity -= 1;
+
+      if (product.quantity === 0) {
+        const productNotOnCart = products.findIndex((item) => item.id === id);
+        return prevProducts.splice(productNotOnCart, 1);
+      }
+
       return prevProducts;
     });
   };
@@ -86,6 +92,12 @@ function ProductCard({ cardProduct, cartState }) {
     setProducts((prevProducts) => {
       const product = prevProducts.find((item) => item.id === id);
       product.quantity = newValue;
+
+      if (product.quantity === 0) {
+        const productNotOnCart = products.findIndex((item) => item.id === id);
+        return prevProducts.splice(productNotOnCart, 1);
+      }
+
       return prevProducts;
     });
   };
