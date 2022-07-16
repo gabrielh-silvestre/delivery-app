@@ -3,10 +3,12 @@ import { useHistory } from 'react-router-dom';
 import NavBar from '../../Components/Navbar';
 import getProducts from '../../API/GetProducts';
 import ProductCard from '../../Components/Products/ProductCard';
+import Cart from '../../Components/Products/Cart';
 import { fetchInformationFromLocalstorage } from '../../Service/LocalSotorage';
 
 function Products() {
   const [products, setProducts] = useState([]);
+  const [changePrice, setChange] = useState(0);
 
   const history = useHistory();
   const linksProducts = [
@@ -47,9 +49,14 @@ function Products() {
       <main>
         {
           products.map((product) => (
-            <ProductCard key={ product.id } cardProduct={ product } />
+            <ProductCard
+              key={ product.id }
+              cardProduct={ product }
+              cartState={ { changePrice, setChange } }
+            />
           ))
         }
+        <Cart cartState={ { changePrice, setChange } } />
       </main>
     </div>
   );
