@@ -2,8 +2,9 @@ import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import context from '../../Context/Context';
 
-function ProductCard({ cardProduct }) {
+function ProductCard({ cardProduct, cartState }) {
   const { id, name, url_image: image, price } = cardProduct;
+  const { setChange } = cartState;
 
   const { products, setProducts } = useContext(context);
   const [activeButton, setActiveButton] = useState(false);
@@ -20,14 +21,14 @@ function ProductCard({ cardProduct }) {
     if (productQty <= 0) setActiveButton(false);
     else setActiveButton(true);
 
+    setChange((prev) => prev + 1);
+
     localStorage.setItem('products', JSON.stringify(products));
-  }, [productQty, products]);
+  }, [setChange, productQty, products]);
 
   useEffect(() => {
     const product = products.find((item) => item.id === id);
-    // JSON.parse(localStorage.getItem('products'));
 
-    console.log(product);
     if (!product) return null;
 
     setProductQty(product.quantity);
@@ -38,7 +39,7 @@ function ProductCard({ cardProduct }) {
     cardProduct.quantity = productQty;
 
     if (products.find((item) => item.id === id) === undefined) {
-      return setProducts((prevProducts) => {
+      setProducts((prevProducts) => {
         prevProducts.push(cardProduct);
         return prevProducts;
       });
@@ -51,12 +52,13 @@ function ProductCard({ cardProduct }) {
     });
   };
 
-  const handleAddItem = () => {
-    setProductQty(productQty + 1);
+  const handleAddItem = async () => {
+    await setProductQty(productQty + 1);
     cardProduct.quantity = productQty;
 
     if (products.find((item) => item.id === id) === undefined) {
-      return setProducts((prevProducts) => {
+      setProducts((prevProducts) => {
+        console.log(cardProduct);
         prevProducts.push(cardProduct);
         return prevProducts;
       });
@@ -65,6 +67,25 @@ function ProductCard({ cardProduct }) {
     setProducts((prevProducts) => {
       const product = prevProducts.find((item) => item.id === id);
       product.quantity += 1;
+      return prevProducts;
+    });
+  };
+
+  const handleInputChange = ({ target }) => {
+    const newValue = Number(target.value);
+    setProductQty(newValue);
+    cardProduct.quantity = productQty;
+
+    if (products.find((item) => item.id === id) === undefined) {
+      setProducts((prevProducts) => {
+        prevProducts.push(cardProduct);
+        return prevProducts;
+      });
+    }
+
+    setProducts((prevProducts) => {
+      const product = prevProducts.find((item) => item.id === id);
+      product.quantity = newValue;
       return prevProducts;
     });
   };
@@ -98,6 +119,8 @@ function ProductCard({ cardProduct }) {
       <input
         data-testid={ `customer_products__input-card-quantity--${id}` }
         value={ productQty }
+        min={ 0 }
+        onChange={ handleInputChange }
       />
       <button
         data-testid={ `customer_products__button-card-add-item--${id}` }
@@ -110,8 +133,6 @@ function ProductCard({ cardProduct }) {
   );
 }
 
-export default ProductCard;
-
 ProductCard.propTypes = {
   cardProduct: PropTypes.shape({
     id: PropTypes.number,
@@ -120,4 +141,10 @@ ProductCard.propTypes = {
     price: PropTypes.string,
     quantity: PropTypes.number,
   }).isRequired,
+  cartState: PropTypes.shape({
+    priceChange: PropTypes.number,
+    setChange: PropTypes.func,
+  }).isRequired,
 };
+
+export default ProductCard;
