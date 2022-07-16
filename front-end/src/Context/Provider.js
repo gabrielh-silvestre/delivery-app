@@ -8,6 +8,8 @@ function Provider({ children }) {
   const [token, setToken] = useState('');
   const [role, setRole] = useState('');
   const [products, setProducts] = useState([]);
+  const [card, setCard] = useState([]);
+  const [sellerList, setSellerList] = useState([]);
 
   const contextValue = {
     name,
@@ -20,6 +22,10 @@ function Provider({ children }) {
     setRole,
     products,
     setProducts,
+    card,
+    setCard,
+    sellerList,
+    setSellerList,
   };
 
   return (

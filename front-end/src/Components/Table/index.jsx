@@ -1,10 +1,19 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
+import context from '../../Context/Context';
+import { saveInformationToLocalstorage } from '../../Service/LocalSotorage';
 import './table.css';
 
 // tabela responsiva baseada no vídeo: https://youtu.be/ZtopjfXhUZI
 
-function Table({ products }) {
+function Table() {
+  const { card, setCard } = useContext(context);
+
+  const removeProduct = (id) => {
+    const updated = card.filter((current) => current.id !== id);
+    setCard(updated);
+    saveInformationToLocalstorage('products', updated);
+  };
+
   return (
     <table className="table">
       <thead>
@@ -16,7 +25,7 @@ function Table({ products }) {
         <th>Romover Item</th>
       </thead>
       <tbody>
-        {products.map((current, index) => (
+        {card && card.map((current, index) => (
           <tr key={ index }>
             <td
               data-label="Item"
@@ -42,7 +51,9 @@ function Table({ products }) {
               data-label="Valor Unitário"
               data-testid={ `customer_checkout__element-order-table-unit-price-${index}` }
             >
-              {current.price.toLocaleString('pt-br', { minimumFractionDigits: 2 })}
+              {current.price.toLocaleString('pt-br', {
+                minimumFractionDigits: 2,
+              })}
             </td>
             <td
               data-label="Item"
@@ -52,11 +63,15 @@ function Table({ products }) {
                 minimumFractionDigits: 2,
               })}
             </td>
-            <td
-              className="table-remove"
-              data-testid={ `customer_checkout__element-order-table-remove-${index}` }
-            >
-              Remover
+            <td>
+              <button
+                className="table-remove"
+                type="button"
+                onClick={ () => removeProduct(current.id) }
+                data-testid={ `customer_checkout__element-order-table-remove-${index}` }
+              >
+                Remover
+              </button>
             </td>
           </tr>
         ))}
@@ -64,15 +79,5 @@ function Table({ products }) {
     </table>
   );
 }
-
-Table.propTypes = {
-  products: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      quantity: PropTypes.number.isRequired,
-    }),
-  ).isRequired,
-};
 
 export default Table;
