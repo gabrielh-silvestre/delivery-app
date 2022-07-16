@@ -51,7 +51,8 @@ function ProductCard({ cardProduct, cartState }) {
 
       if (product.quantity === 0) {
         const productNotOnCart = products.findIndex((item) => item.id === id);
-        return prevProducts.splice(productNotOnCart, 1);
+        prevProducts.splice(productNotOnCart, 1);
+        return prevProducts;
       }
 
       return prevProducts;
@@ -95,7 +96,8 @@ function ProductCard({ cardProduct, cartState }) {
 
       if (product.quantity === 0) {
         const productNotOnCart = products.findIndex((item) => item.id === id);
-        return prevProducts.splice(productNotOnCart, 1);
+        prevProducts.splice(productNotOnCart, 1);
+        return prevProducts;
       }
 
       return prevProducts;
