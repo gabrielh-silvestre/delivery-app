@@ -51,17 +51,13 @@ function Table() {
               data-label="Valor Unitário"
               data-testid={ `customer_checkout__element-order-table-unit-price-${index}` }
             >
-              {current.price.toLocaleString('pt-br', {
-                minimumFractionDigits: 2,
-              })}
+              {Number(current.price).toFixed(2).replace('.', ',')}
             </td>
             <td
               data-label="Item"
               data-testid={ `customer_checkout__element-order-table-sub-total-${index}` }
             >
-              {(current.price * current.quantity).toLocaleString('pt-br', {
-                minimumFractionDigits: 2,
-              })}
+              {Number(current.price * current.quantity).toFixed(2).replace('.', ',')}
             </td>
             <td>
               <button

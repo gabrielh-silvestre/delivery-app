@@ -47,15 +47,21 @@ function Checkout() {
             <Table />
             <h3
               className="chackout-amount"
-              data-testid="customer_checkout__element-order-total-price"
             >
               Valor total:
-              {card ? ` ${card
-                .reduce(
-                  (previous, current) => previous + current.price * current.quantity,
-                  0,
-                )
-                .toLocaleString('pt-br', { minimumFractionDigits: 2 })}` : ' 0,00'}
+              {card ? (
+                <span data-testid="customer_checkout__element-order-total-price">
+                  {card
+                    .reduce(
+                      (previous, current) => previous + current.price * current.quantity,
+                      0,
+                    )
+                    .toFixed(2)
+                    .replace('.', ',')}
+                </span>
+              ) : (
+                ' 0,00'
+              )}
             </h3>
           </div>
         </div>
