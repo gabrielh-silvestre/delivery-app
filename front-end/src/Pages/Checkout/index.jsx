@@ -24,10 +24,12 @@ function Checkout() {
   const { card, setCard, setSellerList } = useContext(context);
 
   useEffect(() => {
-    const products = fetchInformationFromLocalstorage('products');
-    const user = fetchInformationFromLocalstorage('user');
+    if (card.length === 0) {
+      const products = fetchInformationFromLocalstorage('products');
+      setCard(products);
+    }
 
-    setCard(products);
+    const user = fetchInformationFromLocalstorage('user');
 
     const fetchData = async () => {
       const data = await searchUser(user.token, 'seller');

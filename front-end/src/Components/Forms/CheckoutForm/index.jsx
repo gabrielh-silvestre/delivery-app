@@ -22,6 +22,7 @@ function CheckoutForm() {
           <select
             value={ seller }
             onChange={ ({ target }) => setSeller(target.value) }
+            data-testid="customer_checkout__select-seller"
           >
             {sellerList.map(({ id, name }) => (
               <option key={ id } value={ name }>
@@ -37,6 +38,7 @@ function CheckoutForm() {
             placeholder="Rua - Bairro - Estado - País"
             value={ address }
             onChange={ ({ target }) => setAddress(target.value) }
+            data-testid="customer_checkout__input-address"
           />
         </div>
         <div className="form-input-number">
@@ -45,10 +47,17 @@ function CheckoutForm() {
             type="text"
             value={ number }
             onChange={ ({ target }) => setNumber(target.value) }
+            data-testid="customer_checkout__input-addressNumber"
           />
         </div>
       </div>
-      <button type="submit" className="form-button">Finalizar pedido</button>
+      <button
+        type="submit"
+        className="form-button"
+        data-testid="customer_checkout__button-submit-order"
+      >
+        Finalizar pedido
+      </button>
     </form>
   );
 }

@@ -6,12 +6,13 @@ function ProductCard({ cardProduct, cartState }) {
   const { id, name, url_image: image, price } = cardProduct;
   const { setChange } = cartState;
 
-  const { products, setProducts } = useContext(context);
+  const { products, setProducts, setCard } = useContext(context);
   const [activeButton, setActiveButton] = useState(false);
   const [productQty, setProductQty] = useState(0);
 
   useEffect(() => {
     const savedProducts = JSON.parse(localStorage.getItem('products'));
+    setCard(savedProducts);
     if (!savedProducts || savedProducts.length === 0) return null;
 
     setProducts(savedProducts);
@@ -24,6 +25,7 @@ function ProductCard({ cardProduct, cartState }) {
     setChange((prev) => prev + 1);
 
     localStorage.setItem('products', JSON.stringify(products));
+    setCard(products);
   }, [setChange, productQty, products]);
 
   useEffect(() => {
