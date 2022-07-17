@@ -15,9 +15,7 @@ function Cart({ cartState }) {
     const calculateTotalPrice = () => {
       products.forEach((product) => {
         setTotalPrice((prevPrice) => {
-          console.log(prevPrice);
           const price = Number(prevPrice.replace(',', '.'));
-          console.log(price);
           return (price + (Number(product.price) * product.quantity))
             .toFixed(2).replace('.', ',');
         });

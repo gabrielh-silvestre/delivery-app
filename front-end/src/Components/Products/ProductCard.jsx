@@ -65,7 +65,6 @@ function ProductCard({ cardProduct, cartState }) {
 
     if (products.find((item) => item.id === id) === undefined) {
       setProducts((prevProducts) => {
-        console.log(cardProduct);
         prevProducts.push(cardProduct);
         return prevProducts;
       });
