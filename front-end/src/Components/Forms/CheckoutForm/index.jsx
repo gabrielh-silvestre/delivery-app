@@ -15,6 +15,7 @@ function CheckoutForm() {
   const finalizeOrder = async (event) => {
     event.preventDefault();
     const productIdAndQuantity = card.map(({ id, quantity }) => ({ id, quantity }));
+    const saleDate = new Date();
     const totalPrice = card.reduce(
       (previous, current) => previous + current.price * current.quantity,
       0,
@@ -25,6 +26,7 @@ function CheckoutForm() {
       totalPrice,
       address: { street: address, number },
       orders: productIdAndQuantity,
+      saleDate,
     };
 
     const response = await RegisterSale(token, purchaseInformation);
