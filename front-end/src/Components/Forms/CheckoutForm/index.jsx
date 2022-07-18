@@ -18,6 +18,7 @@ function CheckoutForm() {
       (previous, current) => previous + current.price * current.quantity,
       0,
     );
+
     const response = await RegisterSale({
       token,
       sellerId: seller,
