@@ -118,7 +118,7 @@ const createNewSale = async ({
     totalPrice,
     deliveryAddress,
     deliveryNumber,
-    status: 'PENDENTE',
+    status: 'Pendente',
   });
   return newSale;
 };

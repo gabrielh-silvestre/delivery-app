@@ -14,7 +14,6 @@ function OrderDetail(props) {
 
   useEffect(() => {
     const { match } = props;
-    console.log(token);
     const response = async () => {
       const res = await axios.get(`http://localhost:3001/sales/${match.params.id}`, {
         headers: {
@@ -23,7 +22,6 @@ function OrderDetail(props) {
       });
       setOrder(res.data);
       setProducts(res.data.products);
-      console.log(res);
     };
     response();
   }, [props, token]);

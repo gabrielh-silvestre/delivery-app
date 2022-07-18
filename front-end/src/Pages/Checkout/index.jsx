@@ -25,9 +25,9 @@ function Checkout() {
 
   useEffect(() => {
     const products = fetchInformationFromLocalstorage('products');
-    const user = fetchInformationFromLocalstorage('user');
-
     setCard(products);
+
+    const user = fetchInformationFromLocalstorage('user');
 
     const fetchData = async () => {
       const data = await searchUser(user.token, 'seller');
