@@ -24,10 +24,8 @@ function Checkout() {
   const { card, setCard, setSellerList } = useContext(context);
 
   useEffect(() => {
-    if (card.length === 0) {
-      const products = fetchInformationFromLocalstorage('products');
-      setCard(products);
-    }
+    const products = fetchInformationFromLocalstorage('products');
+    setCard(products);
 
     const user = fetchInformationFromLocalstorage('user');
 

@@ -1,16 +1,39 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
+// import RegisterSale from '../../../API/RegisterSale';
 import context from '../../../Context/Context';
 import './CheckoutForm.css';
 
 function CheckoutForm() {
-  const [seller, setSeller] = useState('');
+  const [seller, setSeller] = useState(0);
   const [address, setAddress] = useState('');
   const [number, setNumber] = useState('');
-  const { sellerList } = useContext(context);
+  const { sellerList, card, token } = useContext(context);
+  const history = useHistory();
+
+  const finalizeOrder = async (event) => {
+    event.preventDefault();
+    const productIdAndQuantity = card.map(({ id, quantity }) => ({ id, quantity }));
+    const totalPrice = card.reduce(
+      (previous, current) => previous + current.price * current.quantity,
+      0,
+    );
+    const response = await RegisterSale({
+      token,
+      sellerId: seller,
+      totalPrice,
+      address: { street: address, number },
+      orders: productIdAndQuantity,
+    });
+
+    if (response.id) {
+      history.push(`/customer/orders/${response.id}`);
+    }
+  };
 
   useEffect(() => {
-    if (sellerList[0] && sellerList[0].name) {
-      setSeller(sellerList[0].name);
+    if (sellerList[0] && sellerList[0].id) {
+      setSeller(sellerList[0].id);
     }
   }, [sellerList]);
 
@@ -25,7 +48,7 @@ function CheckoutForm() {
             data-testid="customer_checkout__select-seller"
           >
             {sellerList.map(({ id, name }) => (
-              <option key={ id } value={ name }>
+              <option key={ id } value={ id }>
                 {name}
               </option>
             ))}
@@ -55,6 +78,7 @@ function CheckoutForm() {
         type="submit"
         className="form-button"
         data-testid="customer_checkout__button-submit-order"
+        onClick={ (event) => finalizeOrder(event) }
       >
         Finalizar pedido
       </button>
