@@ -69,8 +69,30 @@ const register = async ({ name, email, password, role }) => {
   };
 };
 
+const destroy = async (role, id) => {
+  if (role !== 'administrator') {
+    throw new UnauthorizedError(
+      'You are not authorized to access this resource',
+    );
+  }
+
+  const foundCustomer = await CustomerModel.findById(id);
+
+  if (!foundCustomer) {
+    throw new NotFoundError('Customer not found');
+  }
+
+  await CustomerModel.destroy(id);
+
+  return {
+    statusCode: 204,
+    payload: null,
+  };
+};
+
 module.exports = {
   findAll,
   login,
   register,
+  destroy,
 };
