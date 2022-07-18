@@ -57,7 +57,7 @@ const create = async (role, userId, sale) => {
     }),
   );
 
-  return { statusCode: 201, payload: null };
+  return { statusCode: 201, payload: null, id: createdSale.id };
 };
 
 const updatePending = async (id, role) => {
@@ -103,7 +103,7 @@ const updateDelivering = async (id, role) => {
 };
 
 const updateDelivered = async (id, role) => {
-  if (role === 'customer') {
+  if (role === 'seller') {
     return { statusCode: 401 };
   }
 
