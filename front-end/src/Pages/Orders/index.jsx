@@ -1,5 +1,6 @@
 import React from 'react';
 import NavBar from '../../Components/Navbar';
+import './orders.css';
 
 function Orders() {
   const linksProducts = [
@@ -18,7 +19,11 @@ function Orders() {
   return (
     <>
       <NavBar links={ linksProducts } />
-      <h1>Meus pedidos</h1>
+      <div className="orders_page">
+        <div className="orders_page_cards">
+          <h1>Meus pedidos</h1>
+        </div>
+      </div>
     </>
   );
 }
