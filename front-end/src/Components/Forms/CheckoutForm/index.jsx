@@ -7,8 +7,9 @@ import './CheckoutForm.css';
 function CheckoutForm() {
   const [seller, setSeller] = useState(0);
   const [address, setAddress] = useState('');
-  const [number, setNumber] = useState('');
+  const [number, setNumber] = useState(0);
   const { sellerList, card, token } = useContext(context);
+  const [activeButton, setActiveButton] = useState(false);
   const history = useHistory();
 
   const finalizeOrder = async (event) => {
@@ -31,6 +32,17 @@ function CheckoutForm() {
       history.push(`/customer/orders/${response.id}`);
     }
   };
+
+  useEffect(() => {
+    if (
+      address.length >= 1
+      && number >= 1
+    ) {
+      setActiveButton(true);
+    } else {
+      setActiveButton(false);
+    }
+  }, [number, address]);
 
   useEffect(() => {
     if (sellerList[0] && sellerList[0].id) {
@@ -68,7 +80,7 @@ function CheckoutForm() {
         <div className="form-input-number">
           <h4>Número:</h4>
           <input
-            type="text"
+            type="number"
             value={ number }
             onChange={ ({ target }) => setNumber(target.value) }
             data-testid="customer_checkout__input-addressNumber"
@@ -80,6 +92,7 @@ function CheckoutForm() {
         className="form-button"
         data-testid="customer_checkout__button-submit-order"
         onClick={ (event) => finalizeOrder(event) }
+        disabled={ !activeButton }
       >
         Finalizar pedido
       </button>
