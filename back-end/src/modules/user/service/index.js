@@ -46,7 +46,7 @@ const login = async ({ email, password }) => {
   };
 };
 
-const register = async ({ name, email, password }) => {
+const register = async ({ name, email, password, role }) => {
   const foundCustomer = await CustomerModel.findByEmail(email);
 
   if (foundCustomer) {
@@ -57,9 +57,10 @@ const register = async ({ name, email, password }) => {
     name,
     email,
     password: encrypt(password),
+    role,
   });
 
-  const { id, role } = newCustomer;
+  const { id } = newCustomer;
   const token = generateToken({ id, role });
 
   return {
