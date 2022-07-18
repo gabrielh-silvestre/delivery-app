@@ -1,21 +1,9 @@
 import axios from 'axios';
 import API_URL from './API_URL';
 
-const RegisterSale = async ({
-  token,
-  sellerId,
-  totalPrice,
-  address,
-  orders,
-},
-) => {
+const RegisterSale = async (token, data) => {
   const response = await axios
-    .post(`${API_URL}sales`, {
-      sellerId,
-      totalPrice,
-      address,
-      orders,
-    }, {
+    .post(`${API_URL}sales`, data, {
       headers: {
         Authorization: token,
       } })

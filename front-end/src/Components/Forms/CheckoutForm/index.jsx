@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-// import RegisterSale from '../../../API/RegisterSale';
+import RegisterSale from '../../../API/RegisterSale';
 import context from '../../../Context/Context';
 import './CheckoutForm.css';
 
@@ -20,13 +20,14 @@ function CheckoutForm() {
       0,
     );
 
-    const response = await RegisterSale({
-      token,
+    const purchaseInformation = {
       sellerId: seller,
       totalPrice,
       address: { street: address, number },
       orders: productIdAndQuantity,
-    });
+    };
+
+    const response = await RegisterSale(token, purchaseInformation);
 
     if (response.id) {
       history.push(`/customer/orders/${response.id}`);
