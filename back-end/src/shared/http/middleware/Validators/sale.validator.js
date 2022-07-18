@@ -4,6 +4,7 @@ const validateSaleCreate = celebrate({
   [Segments.BODY]: Joi.object({
     sellerId: Joi.number().required(),
     totalPrice: Joi.number().min(1).required(),
+    saleDate: Joi.date().required(),
     address: Joi.object({
       street: Joi.string().required(),
       number: Joi.number().required(),
