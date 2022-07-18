@@ -32,6 +32,7 @@ function CheckoutForm() {
     const response = await RegisterSale(token, purchaseInformation);
 
     if (response.id) {
+      localStorage.removeItem('products');
       history.push(`/customer/orders/${response.id}`);
     }
   };
