@@ -5,6 +5,7 @@ import getProducts from '../../API/GetProducts';
 import ProductCard from '../../Components/Products/ProductCard';
 import Cart from '../../Components/Products/Cart';
 import { fetchInformationFromLocalstorage } from '../../Service/LocalSotorage';
+import './products.css';
 
 function Products() {
   const [products, setProducts] = useState([]);
@@ -47,15 +48,17 @@ function Products() {
       <NavBar links={ linksProducts } />
 
       <main>
-        {
-          products.map((product) => (
-            <ProductCard
-              key={ product.id }
-              cardProduct={ product }
-              cartState={ { changePrice, setChange } }
-            />
-          ))
-        }
+        <section className="products-cards">
+          {
+            products.map((product) => (
+              <ProductCard
+                key={ product.id }
+                cardProduct={ product }
+                cartState={ { changePrice, setChange } }
+              />
+            ))
+          }
+        </section>
         <Cart cartState={ { changePrice, setChange } } />
       </main>
     </div>
