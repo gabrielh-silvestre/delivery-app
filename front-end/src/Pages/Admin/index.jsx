@@ -48,6 +48,7 @@ export default function Admin() {
   );
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
   const [isNewUserValid, setIsNewUserValid] = useState(false);
+  const [hasError, setHasError] = useState(false);
 
   const [users, setUsers] = useState([]);
 
@@ -64,20 +65,19 @@ export default function Admin() {
 
     const { name, email, password, role } = state;
 
-    const response = await axios.post(
-      `${API_URL}user/register`,
-      {
-        name,
-        email,
-        password,
-        role,
-      },
-      { headers: { Authorization: token } },
-    );
-
-    if (response && response.message) {
-      return;
-    }
+    await axios
+      .post(
+        `${API_URL}user/register`,
+        {
+          name,
+          email,
+          password,
+          role,
+        },
+        { headers: { Authorization: token } },
+      )
+      .then(() => setHasError(false))
+      .catch(() => setHasError(true));
 
     fetchUsers();
   };
@@ -172,6 +172,15 @@ export default function Admin() {
         >
           Cadastrar
         </button>
+
+        {hasError && (
+          <p
+            data-testid="admin_manage__element-invalid-register
+"
+          >
+            Erro ao cadastrar usuário
+          </p>
+        )}
       </form>
 
       <div>
