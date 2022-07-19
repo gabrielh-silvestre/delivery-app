@@ -31,6 +31,14 @@ const findByEmail = async (email) => {
   return user;
 };
 
+const findByName = async (name) => {
+  const user = await User.findOne({
+    where: { name },
+  });
+
+  return user;
+};
+
 const create = async ({ name, email, password, role = 'customer' }) => {
   const data = { name, email, password, role };
   const user = await User.create(data, {
@@ -50,6 +58,7 @@ module.exports = {
   findAll,
   findById,
   findByEmail,
+  findByName,
   create,
   destroy,
 };

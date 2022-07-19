@@ -47,11 +47,11 @@ const login = async ({ email, password }) => {
 };
 
 const register = async ({ name, email, password, role }) => {
-  const foundCustomer = await CustomerModel.findByEmail(email);
+  const foundCustomerByEmail = await CustomerModel.findByEmail(email);
+  if (foundCustomerByEmail) throw new ConflictError('Email already exists');
 
-  if (foundCustomer) {
-    throw new ConflictError('Email already exists');
-  }
+  const foundCustomerByName = await CustomerModel.findByName(name);
+  if (foundCustomerByName) throw new ConflictError('Name already exists');
 
   const newCustomer = await CustomerModel.create({
     name,
