@@ -9,6 +9,7 @@ import {
   fetchInformationFromLocalstorage,
   saveInformationToLocalstorage,
 } from '../../Service/LocalSotorage';
+import checkLoggedInUser from './Services';
 
 export default function Login() {
   const [password, setPassword] = useState('');
@@ -19,10 +20,7 @@ export default function Login() {
 
   useEffect(() => {
     const user = fetchInformationFromLocalstorage('user');
-
-    if (user) {
-      history.push('/customer/products');
-    }
+    checkLoggedInUser(history, user);
   });
 
   useEffect(() => {
@@ -62,6 +60,7 @@ export default function Login() {
     setRole(response.role);
 
     if (response.role === 'customer') history.push('/customer/products');
+    if (response.role === 'seller') history.push('/seller/orders');
   };
 
   return (

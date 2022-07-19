@@ -3,9 +3,9 @@ import FetchOrders from '../../API/FetchOrders';
 import CardOrders from '../../Components/CardOrders';
 import NavBar from '../../Components/Navbar';
 import { fetchInformationFromLocalstorage } from '../../Service/LocalSotorage';
-import './orders.css';
+import './ordersSeller.css';
 
-function Orders() {
+function OrdersSeller() {
   const [orderList, setOrderList] = useState([]);
   const linksProducts = [
     {
@@ -43,7 +43,7 @@ function Orders() {
           {orderList
             && orderList.map((current) => (
               <div key={ current.id }>
-                <CardOrders order={ current } user="customer" />
+                <CardOrders order={ current } user="seller" />
               </div>
             ))}
         </div>
@@ -52,4 +52,4 @@ function Orders() {
   );
 }
 
-export default Orders;
+export default OrdersSeller;
