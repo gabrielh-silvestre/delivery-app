@@ -103,8 +103,8 @@ export default function Admin() {
   }, [fetchUsers, token]);
 
   useEffect(() => {
-    const isNameValid = state.name.length > MIN_NAME_LENGTH;
-    const isPasswordValid = state.password.length > MIN_PASSWORD_LENGTH;
+    const isNameValid = state.name.length >= MIN_NAME_LENGTH;
+    const isPasswordValid = state.password.length >= MIN_PASSWORD_LENGTH;
     const isEmailValid = EMAIL_REGEX.test(state.email);
 
     setIsNewUserValid(isNameValid && isPasswordValid && isEmailValid);
