@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import React from 'react';
-import './cardOrders.css';
+// import './cardOrders.css';
 
 function CardOrders({ order }) {
   const history = useHistory();
