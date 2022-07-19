@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import FetchOrders from '../../API/FetchOrders';
+import CardOrders from '../../Components/CardOrders';
 import NavBar from '../../Components/Navbar';
+import { fetchInformationFromLocalstorage } from '../../Service/LocalSotorage';
 import './orders.css';
 
 function Orders() {
+  const [orderList, setOrderList] = useState([]);
   const linksProducts = [
     {
       name: 'Produtos',
@@ -16,12 +20,33 @@ function Orders() {
     },
   ];
 
+  useEffect(() => {
+    const fetch = async () => {
+      const { token } = fetchInformationFromLocalstorage('user');
+      const response = await FetchOrders(token);
+      console.log(response);
+      // console.log(new Intl.DateTimeFormat('pt-br').format(new Date(response[0].saleDate)));
+      setOrderList(response);
+    };
+    fetch();
+  }, []);
+
+  useEffect(() => {
+    console.log(orderList);
+  }, [orderList]);
+
   return (
     <>
       <NavBar links={ linksProducts } />
       <div className="orders_page">
         <div className="orders_page_cards">
           <h1>Meus pedidos</h1>
+          {orderList
+            && orderList.map((current) => (
+              <div key={ current.id }>
+                <CardOrders order={ current } />
+              </div>
+            ))}
         </div>
       </div>
     </>
