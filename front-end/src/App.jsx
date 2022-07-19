@@ -6,6 +6,7 @@ import Login from './Pages/Login';
 import Products from './Pages/Products';
 import Register from './Pages/Register';
 import OrderDetail from './Pages/OrderDetail';
+import './style/index.css';
 import Orders from './Pages/Orders';
 import OrdersSeller from './Pages/OrdersSeller';
 import Admin from './Pages/Admin';
