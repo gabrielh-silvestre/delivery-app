@@ -28,6 +28,7 @@ function Cart({ cartState }) {
   return (
     <div data-testid="customer_products__checkout-bottom-value">
       <button
+        className="cart-button"
         data-testid="customer_products__button-cart"
         type="button"
         disabled={ (totalPrice === '0' || totalPrice === '0,00') }
