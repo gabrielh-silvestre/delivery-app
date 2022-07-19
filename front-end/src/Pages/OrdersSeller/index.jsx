@@ -9,13 +9,8 @@ function OrdersSeller() {
   const [orderList, setOrderList] = useState([]);
   const linksProducts = [
     {
-      name: 'Produtos',
-      link: '/customer/products',
-      testid: 'customer_products__element-navbar-link-products',
-    },
-    {
-      name: 'Meus pedidos',
-      link: '/customer/orders',
+      name: 'Pedidos',
+      link: '/seller/orders',
       testid: 'customer_products__element-navbar-link-orders',
     },
   ];
