@@ -25,6 +25,7 @@ const findAllBySeller = async (sellerId) => {
   const sales = await Sale.findAll({
     where: { sellerId },
     attributes: { exclude: ['userId', 'sellerId'] },
+    order: [['id', 'DESC']],
   });
 
   return sellerSaleReturnNormalizer(sales);
