@@ -34,7 +34,6 @@ function OrdersSeller() {
       <NavBar links={ linksProducts } />
       <div className="orders_page">
         <div className="orders_page_cards">
-          <h1>Meus pedidos</h1>
           {orderList
             && orderList.map((current) => (
               <div key={ current.id }>
