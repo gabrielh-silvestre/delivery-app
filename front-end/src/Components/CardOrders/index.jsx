@@ -24,7 +24,9 @@ function CardOrders({ order, user }) {
           <h3
             data-testid={ `seller_orders__element-delivery-status-${order.id}` }
           >
-            {order.status}
+            {
+              order.status
+            }
           </h3>
         </div>
         <div>
@@ -58,7 +60,9 @@ function CardOrders({ order, user }) {
           <h3
             data-testid={ `customer_orders__element-delivery-status-${order.id}` }
           >
-            {order.status}
+            {
+              order.status
+            }
           </h3>
         </div>
         <div>
