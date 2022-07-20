@@ -10,7 +10,7 @@ module.exports = {
         delivery_address: "Rua dos Bobos",
         delivery_number: "678",
         sale_date: Sequelize.literal("CURRENT_TIMESTAMP"),
-        status: "Em transito",
+        status: "Em Trânsito",
       },
       {
         user_id: 3,
@@ -28,7 +28,7 @@ module.exports = {
         delivery_address: "Rua dos Bobos",
         delivery_number: "678",
         sale_date: Sequelize.literal("CURRENT_TIMESTAMP"),
-        status: "Em transito",
+        status: "Em Trânsito",
       },
     ]),
 
