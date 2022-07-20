@@ -92,7 +92,7 @@ const findByIdByDelivering = async (id) => {
 
   if (!sale) return null;
 
-  await Sale.update({ status: 'Em transito' }, { where: { id } });
+  await Sale.update({ status: 'Em Trânsito' }, { where: { id } });
   return true;
 };
 
