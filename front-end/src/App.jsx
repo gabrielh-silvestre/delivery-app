@@ -10,6 +10,7 @@ import './style/index.css';
 import Orders from './Pages/Orders';
 import OrdersSeller from './Pages/OrdersSeller';
 import Admin from './Pages/Admin';
+import OrderSellerDetail from './Pages/OrderDetailSeller';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route exact path="/customer/products" component={ Products } />
         <Route exact path="/customer/orders" component={ Orders } />
         <Route exact path="/customer/orders/:id" component={ OrderDetail } />
+        <Route exact path="/seller/orders/:id" component={ OrderSellerDetail } />
         <Route exact path="/customer/checkout" component={ Checkout } />
         <Route exact path="/seller/orders" component={ OrdersSeller } />
         <Route exact path="/admin/manage" component={ Admin } />
