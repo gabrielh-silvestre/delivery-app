@@ -81,11 +81,14 @@
   padding: 16px;
 }
 
+button {
+  cursor: pointer;
+}
+
 .product-quantity button {
   background-color: var(--color-3);
   border: hidden;
   color: #1b2b57;
-  cursor: pointer;
   font-size: xx-large;
   padding: 0 20px;
   transition: 0.2s;
