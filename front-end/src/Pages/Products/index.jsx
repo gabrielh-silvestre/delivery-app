@@ -47,7 +47,8 @@ function Products() {
     <div>
       <NavBar links={ linksProducts } />
 
-      <main>
+      <main className="product-page">
+
         <section className="products-cards">
           {
             products.map((product) => (
