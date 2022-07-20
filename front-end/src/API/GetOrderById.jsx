@@ -34,3 +34,39 @@ export const updateOrderStatus = (
 
   return response;
 };
+
+export const updatePreparingStatus = (
+  id,
+  token,
+) => {
+  const response = axios
+    .patch(`${API_URL}sales/preparing/${id}`,
+      {},
+      {
+        headers: {
+          Authorization: token,
+        },
+      })
+    .then((Response) => Response)
+    .catch((error) => error);
+
+  return response;
+};
+
+export const updateDeliveringStatus = (
+  id,
+  token,
+) => {
+  const response = axios
+    .patch(`${API_URL}sales/delivering/${id}`,
+      {},
+      {
+        headers: {
+          Authorization: token,
+        },
+      })
+    .then((Response) => Response)
+    .catch((error) => error);
+
+  return response;
+};

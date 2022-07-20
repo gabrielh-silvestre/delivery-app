@@ -1,11 +1,3 @@
-.product-page {
-  background-color: var(--color-5);
-  max-width: 100%;
-  min-height: fit-content;
-  min-width: fit-content;
-  padding-bottom: 20%;
-}
-
 .products-cards {
   display: flex;
   flex-wrap: wrap;
@@ -67,12 +59,12 @@
 .cart-button {
   background-color: var(--color-blue);
   border-radius: 5px;
-  bottom: 20%;
+  bottom: -0.5%;
   color: rgb(229, 229, 229);
   font-size: medium;
   padding: 15px;
   position: fixed;
-  right: 10%;
+  right: 5%;
   transition: 0.1s;
 }
 
