@@ -27,7 +27,7 @@ function OrderDetail(props) {
       setDate(new Intl.DateTimeFormat('pt-br')
         .format(new Date(orderDetail.saleDate)));
 
-      if (orderDetail.status === 'Em transito') {
+      if (orderDetail.status === 'Em Trânsito') {
         setButton(false);
       }
     };
