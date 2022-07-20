@@ -6,7 +6,6 @@ import context from '../../Context/Context';
 function Cart({ cartState }) {
   const { products, setProducts } = useContext(context);
   const [totalPrice, setTotalPrice] = useState('0');
-  // const [activeButton, setActiveButton] = useState(false);
 
   const history = useHistory();
 
