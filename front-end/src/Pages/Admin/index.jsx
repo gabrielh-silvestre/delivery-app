@@ -8,6 +8,9 @@ import { fetchInformationFromLocalstorage } from '../../Service/LocalSotorage';
 
 import testsId from '../../tests/data-testid';
 
+import './admin.css';
+import TableAdmin from '../../Components/TableAdmin';
+
 const linksAdmin = [
   {
     name: 'Gerenciar Usuários',
@@ -114,7 +117,7 @@ export default function Admin() {
     <>
       <NavBar links={ linksAdmin } />
 
-      <form onSubmit={ handleSubmit }>
+      <form onSubmit={ handleSubmit } className="admin_form">
         <label htmlFor="NAME">
           Nome:
           <input
@@ -174,31 +177,20 @@ export default function Admin() {
         </button>
 
         {hasError && (
-          <p
-            data-testid="admin_manage__element-invalid-register
-"
-          >
+          <p data-testid="admin_manage__element-invalid-register">
             Erro ao cadastrar usuário
           </p>
         )}
       </form>
 
-      <div>
-        {users.map((user, i) => (
-          <div key={ user.id }>
-            <p data-testid={ `${testsId[69]}${i}` }>{user.id}</p>
-            <p data-testid={ `${testsId[70]}${i}` }>{user.name}</p>
-            <p data-testid={ `${testsId[71]}${i}` }>{user.email}</p>
-            <p data-testid={ `${testsId[72]}${i}` }>{user.role}</p>
-            <button
-              type="button"
-              onClick={ () => handleDelete(user.id) }
-              data-testid={ `${testsId[73]}${i}` }
-            >
-              Excluir
-            </button>
-          </div>
-        ))}
+      <div className="admin_center_table">
+        <div className="admin_table">
+          <TableAdmin
+            users={ users }
+            testsId={ testsId }
+            handleDelete={ handleDelete }
+          />
+        </div>
       </div>
     </>
   );
