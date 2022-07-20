@@ -1,8 +1,16 @@
+.product-page {
+  background-color: var(--color-5);
+  max-width: 100%;
+  min-height: fit-content;
+  min-width: fit-content;
+  padding-bottom: 20%;
+}
+
 .products-cards {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
-  margin: 40px 20px;
+  padding: 60px 20px;
 }
 
 .product-card {
@@ -59,11 +67,12 @@
 .cart-button {
   background-color: var(--color-blue);
   border-radius: 5px;
+  bottom: 20%;
   color: rgb(229, 229, 229);
   font-size: medium;
-  margin-left: 80%;
   padding: 15px;
-  position: absolute;
+  position: fixed;
+  right: 10%;
   transition: 0.1s;
 }
 
@@ -73,21 +82,18 @@
 }
 
 button {
+  cursor: pointer;
+}
+
+.product-quantity button {
   background-color: var(--color-3);
   border: hidden;
   color: #1b2b57;
-  cursor: pointer;
   font-size: xx-large;
   padding: 0 20px;
   transition: 0.2s;
 }
 
-button:hover {
+.product-quantity button:hover {
   color: white;
 }
-
-/* .product-quantity button {
-  text-align: center;
-
-} */
-
