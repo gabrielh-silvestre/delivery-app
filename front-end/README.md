@@ -191,9 +191,9 @@ Email - eltonmorenocl@gmail.com
 ### Daniel Tavares
 Linkedin - https://www.linkedin.com/in/daniel-tavares-819727217/
 
-Email - 
+Email - daniel1tavares@outlook.com
 
 ### André Luiz S. da Silva
 Linkedin - https://www.linkedin.com/in/andreluiiz/
 
-Email - 
+Email - andreluizgyn1@gmail.com
