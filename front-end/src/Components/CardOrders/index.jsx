@@ -6,9 +6,6 @@ import './cardOrders.css';
 function CardOrders({ order, user }) {
   const history = useHistory();
 
-console.log('embaixo');
-  console.log(order);
-
   return user === 'seller' ? (
     <div
       className={ `cardOrders ${
