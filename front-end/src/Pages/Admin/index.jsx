@@ -19,6 +19,13 @@ const linksAdmin = [
   },
 ];
 
+const INITIAL_STATE = {
+  name: '',
+  email: '',
+  password: '',
+  role: 'seller',
+};
+
 const reducer = (state, action) => {
   switch (action.type) {
   case 'SET_USER_NAME':
@@ -29,16 +36,11 @@ const reducer = (state, action) => {
     return { ...state, password: action.payload };
   case 'SET_USER_ROLE':
     return { ...state, role: action.payload };
+  case 'RESET':
+    return { ...INITIAL_STATE };
   default:
     return state;
   }
-};
-
-const INITIAL_STATE = {
-  name: '',
-  email: '',
-  password: '',
-  role: 'seller',
 };
 
 const MIN_NAME_LENGTH = 12;
@@ -79,7 +81,10 @@ export default function Admin() {
         },
         { headers: { Authorization: token } },
       )
-      .then(() => setHasError(false))
+      .then(() => {
+        setHasError(false);
+        dispatch({ type: 'RESET' });
+      })
       .catch(() => setHasError(true));
 
     fetchUsers();
