@@ -1,7 +1,9 @@
 const CustomerService = require('../service');
 
 const findAll = async (req, res) => {
+  const { id } = req.user;
   const { statusCode, payload } = await CustomerService.findAll(
+    id,
     req.query.r || null,
   );
 

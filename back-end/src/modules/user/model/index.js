@@ -2,13 +2,11 @@ const { Op } = require('sequelize');
 
 const { User } = require('../../../database/models');
 
-const findAll = async (role) => {
+const findAll = async (id, role) => {
   const users = await User.findAll({
     where: {
-      role: {
-        [Op.like]: `%${role || ''}%`,
-        [Op.not]: 'administrator',
-      },
+      id: { [Op.not]: id },
+      role: { [Op.like]: `%${role || ''}%` },
     },
     attributes: ['id', 'name', 'email', 'role'],
   });

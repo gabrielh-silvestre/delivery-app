@@ -11,14 +11,14 @@ const { generateToken } = require('../../../shared/utils/auth');
 
 const INVALID_EMAIL_OR_PASSWORD = 'Invalid email or password';
 
-const findAll = async (role) => {
+const findAll = async (id, role) => {
   if (role === 'administrator') {
     throw new UnauthorizedError(
       'You are not authorized to access this resource',
     );
   }
 
-  const foundCustomers = await CustomerModel.findAll(role);
+  const foundCustomers = await CustomerModel.findAll(id, role);
 
   return {
     statusCode: 200,
