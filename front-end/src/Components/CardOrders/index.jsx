@@ -6,10 +6,13 @@ import './cardOrders.css';
 function CardOrders({ order, user }) {
   const history = useHistory();
 
+console.log('embaixo');
+  console.log(order);
+
   return user === 'seller' ? (
     <div
       className={ `cardOrders ${
-        order.status === 'Em transito' ? 'cardOrders_in-transit' : ''
+        order.status === 'Em Trânsito' ? 'cardOrders_in-transit' : ''
       }${order.status === 'Preparando' ? 'cardOrders_in-preparing' : ''}${
         order.status === 'Entregue' ? 'cardOrders_delivered' : ''
       }` }
