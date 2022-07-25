@@ -1,7 +1,7 @@
 .products-cards {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: center;
   padding: 60px 20px;
 }
 

@@ -39,6 +39,7 @@
 
   .table tr {
     margin-bottom: 15px;
+    overflow-y: hidden;
   }
 
   .table td {

@@ -22,7 +22,6 @@ function OrderDetail(props) {
 
     const setPageStates = async () => {
       const orderDetail = await getOrder(match.params.id, token);
-      console.log(orderDetail);
       setOrder(orderDetail);
       setProducts(orderDetail.products);
       setOrderStatus(orderDetail.status);

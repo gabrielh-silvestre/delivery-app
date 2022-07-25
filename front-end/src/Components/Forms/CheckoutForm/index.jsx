@@ -32,7 +32,6 @@ function CheckoutForm() {
     const response = await RegisterSale(token, purchaseInformation);
 
     if (response.id) {
-      console.log('apaga');
       setCard([]);
       localStorage.removeItem('products');
       history.push(`/customer/orders/${response.id}`);

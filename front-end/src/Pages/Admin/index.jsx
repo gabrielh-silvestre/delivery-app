@@ -91,6 +91,16 @@ export default function Admin() {
   };
 
   const handleDelete = async (id) => {
+    if(id === 1) {
+      alert("Administrador protegido (usado para teste)");
+      return
+    }
+
+    if(id === 2) {
+      alert("Vendedor protegido (usado para teste)");
+      return
+    }
+
     await axios.delete(`${API_URL}user/${id}`, {
       headers: {
         Authorization: token,

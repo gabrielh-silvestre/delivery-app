@@ -24,14 +24,12 @@ function Orders() {
     const fetch = async () => {
       const { token } = fetchInformationFromLocalstorage('user');
       const response = await FetchOrders(token);
-      console.log(response);
       setOrderList(response);
     };
     fetch();
   }, []);
 
   useEffect(() => {
-    console.log(orderList);
   }, [orderList]);
 
   return (
@@ -39,12 +37,13 @@ function Orders() {
       <NavBar links={ linksProducts } />
       <div className="orders_page">
         <div className="orders_page_cards">
-          {orderList
-            && orderList.map((current) => (
+          {orderList.length > 1
+            ? orderList.map((current) => (
               <div key={ current.id }>
                 <CardOrders order={ current } user="customer" />
               </div>
-            ))}
+            ))
+          : <h3>Você ainda não fez nenhuma compra.</h3>}
         </div>
       </div>
     </>

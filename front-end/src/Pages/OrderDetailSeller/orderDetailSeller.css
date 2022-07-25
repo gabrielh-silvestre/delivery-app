@@ -73,3 +73,19 @@ p {
   border: 1px solid #999;
   color: #666;
 }
+
+@media ( max-width : 850px ) {
+
+  .order-detail-container {
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+
+  .order-detail-container p {
+    width: 100%;
+  }
+
+  .order-detail-container button {
+    width: 100%;
+  }
+}

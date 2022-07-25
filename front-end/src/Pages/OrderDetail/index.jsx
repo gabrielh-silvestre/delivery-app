@@ -78,6 +78,7 @@ function OrderDetail(props) {
                 data-testid={ DATA_TEST_ID[38] }
               >
                 Vendedor(a):
+                {' '}
                 {order.seller.name}
               </p>
               <p
